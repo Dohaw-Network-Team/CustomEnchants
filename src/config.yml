@@ -1,0 +1,20 @@
+Enchants:
+  Life_Steal:
+    ChancePerLevel:
+      1: 20
+      2: 40
+      3: 60
+  Deep_Wounds:
+    ChancePerLevel:
+      1: 10
+      2: 20
+      3: 30
+      4: 35
+      5: 40
+    PercentageDamageToBleeding: 0.25
+    LengthBleeding: 10
+  Headless:
+    ChancePerLevel:
+      1: 50
+      2: 70
+      3: 100
