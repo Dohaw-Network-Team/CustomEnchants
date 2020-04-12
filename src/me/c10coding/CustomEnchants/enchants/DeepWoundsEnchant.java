@@ -28,7 +28,7 @@ public class DeepWoundsEnchant extends CustomEnchant{
 	public void onPlayerHit(final EntityDamageByEntityEvent e) {
 		if(!(e.getDamager() instanceof Player)) return;
 
-		if(!(e.getEntity() instanceof LivingEntity)) return; 
+		if(!(e.getEntity() instanceof LivingEntity)) return;
 
 		Player p = (Player) e.getDamager();	
 		final LivingEntity entityHit = (LivingEntity) e.getEntity();
@@ -38,44 +38,47 @@ public class DeepWoundsEnchant extends CustomEnchant{
 		/*
 		 * Bleeding will be <damagePercentage> (variable) of the damage done
 		 */
-		if(im.getEnchants().containsKey(Enchantment.getByKey(this.getKey()))) {
-			double chance = getChance(im.getEnchantLevel(this));
-			int i = rnd.nextInt(100);
-			if(i < chance){
-				if(entityHit.hasMetadata("hasDeepWounds")){
-					return;
-				}else{
-					entityHit.setMetadata("hasDeepWounds", new FixedMetadataValue(plugin, true));
+		if(itemInHand != null && itemInHand.hasItemMeta() && im.hasEnchants()){
+			if(im.getEnchants().containsKey(Enchantment.getByKey(this.getKey()))) {
+				double chance = getChance(im.getEnchantLevel(this));
+				int i = rnd.nextInt(100);
+				if(i < chance){
+					if(entityHit.hasMetadata("hasDeepWounds")){
+						return;
+					}else{
+						entityHit.setMetadata("hasDeepWounds", new FixedMetadataValue(plugin, true));
 
-					new BukkitRunnable() {
-						int counter = 0;
-						double dmgDone = e.getDamage();
-						double dmgBleeding = dmgDone * damagePercentage;
-						@Override
-						public void run() {
-							double entityHitHealth = entityHit.getHealth();
-							if(counter < lengthBleeding) {
-								entityHit.getWorld().spawnParticle(enchantParticle, entityHit.getLocation(), 10, new Particle.DustOptions(Color.RED, 20));
-								try{
-									entityHit.setHealth(entityHitHealth - dmgBleeding);
-									entityHit.playEffect(EntityEffect.HURT);
-								}catch(IllegalArgumentException e){
-									entityHit.setHealth(0);
+						new BukkitRunnable() {
+							int counter = 0;
+							double dmgDone = e.getDamage();
+							double dmgBleeding = dmgDone * damagePercentage;
+							@Override
+							public void run() {
+								double entityHitHealth = entityHit.getHealth();
+								if(counter < lengthBleeding) {
+									entityHit.getWorld().spawnParticle(enchantParticle, entityHit.getLocation(), 10, new Particle.DustOptions(Color.RED, 20));
+									try{
+										entityHit.setHealth(entityHitHealth - dmgBleeding);
+										entityHit.playEffect(EntityEffect.HURT);
+									}catch(IllegalArgumentException e){
+										entityHit.setHealth(0);
+										this.cancel();
+									}
+								}else {
+									entityHit.removeMetadata("hasDeepWounds", plugin);
 									this.cancel();
 								}
-							}else {
-								entityHit.removeMetadata("hasDeepWounds", plugin);
-								this.cancel();
+								counter++;
 							}
-							counter++;
-						}
 
-					}.runTaskTimer(plugin, 0L, 20L);
+						}.runTaskTimer(plugin, 0L, 20L);
+
+					}
+
 
 				}
+		}
 
-
-			}
 			
 		}
 		

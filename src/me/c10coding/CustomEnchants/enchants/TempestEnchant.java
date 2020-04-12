@@ -14,45 +14,47 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
-public class TempestEnchant extends CustomEnchant{
+public class TempestEnchant extends CustomEnchant {
 
-    final double levelOneStrikes = plugin.getConfig().getDouble(configPath + "StrikesPerLevel.1");
-    final double levelTwoStrikes = plugin.getConfig().getDouble(configPath + "StrikesPerLevel.2");
-    final double percLightningIncrease = plugin.getConfig().getDouble(configPath + "PercentageLightningDmgIncrease");
+    final double levelOneStrikes = plugin.getConfig().getDouble(configPath + ".StrikesPerLevel.1");
+    final double levelTwoStrikes = plugin.getConfig().getDouble(configPath + ".StrikesPerLevel.2");
+    final double percLightningIncrease = plugin.getConfig().getDouble(configPath + ".PercentageLightningDmgIncrease");
 
     Map<Arrow, Integer> arrowMap = new HashMap<Arrow, Integer>();
     //Entities that are getting struck via Tempest enchant
     ArrayList<Entity> gettingStruck = new ArrayList<Entity>();
 
-    public TempestEnchant(){
+    public TempestEnchant() {
         super(EnchantmentKeys.tempest, ChatColor.BLUE, Particle.SPELL);
         Bukkit.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
     @EventHandler
-    public void onArrowHit(EntityDamageByEntityEvent e){
+    public void onArrowHit(EntityDamageByEntityEvent e) {
         Entity en = e.getEntity();
 
-        if(e.getDamager() instanceof Arrow) {
+        if (e.getDamager() instanceof Arrow) {
             Arrow arrow = (Arrow) e.getDamager();
             if (arrow.getShooter() instanceof Player) {
-                for (Map.Entry<Arrow, Integer> a : arrowMap.entrySet()) {
-                    if (a.getKey().equals(arrow)) {
+                Iterator<Map.Entry<Arrow, Integer>> itr = arrowMap.entrySet().iterator();
+                while (itr.hasNext()) {
+                    Map.Entry me = (Map.Entry) itr.next();
+                    if (me.getKey().equals(arrow)) {
                         //This is the arrow that was shot earlier and has the lightning enchant on it
                         gettingStruck.add(en);
-                        for (int x = 0; x < a.getValue(); x++) {
+                        for (int x = 0; x < (int) me.getValue(); x++) {
                             en.getWorld().strikeLightning(en.getLocation());
                         }
+                        //Removes arrow after it's done with its business
+                        itr.remove();
                     }
                 }
             }
         }
     }
+
 
     @EventHandler
     public void onPlayerLightningStrike(EntityDamageByEntityEvent e){

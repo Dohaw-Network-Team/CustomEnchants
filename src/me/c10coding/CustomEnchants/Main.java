@@ -20,6 +20,8 @@ public class Main extends JavaPlugin{
 	public static CustomEnchant headless;
 	public static CustomEnchant tempest;
 	public static CustomEnchant swiftFoot;
+	public static CustomEnchant chestImplants;
+	public static CustomEnchant cripplingShot;
 
 	private ArrayList<Enchantment> enchantList = new ArrayList<Enchantment>();
 	
@@ -41,12 +43,16 @@ public class Main extends JavaPlugin{
 		headless = new HeadlessEnchant();
 		tempest = new TempestEnchant();
 		swiftFoot = new SwiftFootEnchant();
+		chestImplants = new ChestImplantsEnchant();
+		cripplingShot = new CripplingShotEnchant();
 		
 		enchantList.add(lifeSteal);
 		enchantList.add(deepWounds);
 		enchantList.add(headless);
 		enchantList.add(tempest);
 		enchantList.add(swiftFoot);
+		enchantList.add(chestImplants);
+		enchantList.add(cripplingShot);
 
 		for(Enchantment e : enchantList) {
 			registerEnchantment(e);

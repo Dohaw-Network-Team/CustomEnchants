@@ -30,3 +30,5 @@ Enchants:
       3: .30
       4: .40
       5: .50
+  Crippling_Shot:
+    SlownessLength: 2.5
