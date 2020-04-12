@@ -5,15 +5,11 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import me.c10coding.CustomEnchants.enchants.HeadlessEnchant;
+import me.c10coding.CustomEnchants.enchants.*;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import me.c10coding.CustomEnchants.enchants.CustomEnchant;
-import me.c10coding.CustomEnchants.enchants.DeepWoundsEnchant;
-import me.c10coding.CustomEnchants.enchants.LifeStealEnchant;
 
 public class Main extends JavaPlugin{
 
@@ -22,6 +18,8 @@ public class Main extends JavaPlugin{
 	public static CustomEnchant lifeSteal;
 	public static CustomEnchant deepWounds;
 	public static CustomEnchant headless;
+	public static CustomEnchant tempest;
+	public static CustomEnchant swiftFoot;
 
 	private ArrayList<Enchantment> enchantList = new ArrayList<Enchantment>();
 	
@@ -41,10 +39,14 @@ public class Main extends JavaPlugin{
 		lifeSteal = new LifeStealEnchant();
 		deepWounds = new DeepWoundsEnchant();
 		headless = new HeadlessEnchant();
+		tempest = new TempestEnchant();
+		swiftFoot = new SwiftFootEnchant();
 		
 		enchantList.add(lifeSteal);
 		enchantList.add(deepWounds);
 		enchantList.add(headless);
+		enchantList.add(tempest);
+		enchantList.add(swiftFoot);
 
 		for(Enchantment e : enchantList) {
 			registerEnchantment(e);

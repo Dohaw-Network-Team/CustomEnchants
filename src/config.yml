@@ -18,3 +18,15 @@ Enchants:
       1: 50
       2: 70
       3: 100
+  Tempest:
+    StrikesPerLevel:
+      1: 1
+      2: 2
+    PercentageLightningDmgIncrease: 0.10
+  Swift_Foot:
+    PercantageIncreasePerLevel:
+      1: .10
+      2: .20
+      3: .30
+      4: .40
+      5: .50

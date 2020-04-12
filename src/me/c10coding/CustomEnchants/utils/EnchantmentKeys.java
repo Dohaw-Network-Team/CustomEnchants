@@ -5,7 +5,7 @@ public enum EnchantmentKeys {
 	auto_repair,
 	deep_wounds,
 	headless,
-	lightning,
+	tempest,
 	swift_foot,
 	chest_implants,
 	crippling_shot,

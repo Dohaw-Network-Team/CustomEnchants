@@ -77,20 +77,43 @@ public class LifeStealEnchant extends CustomEnchant{
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent e) {
 		ItemStack item = new ItemStack(Material.STONE_SWORD, 1);
+		ItemStack bow = new ItemStack(Material.BOW, 1);
+		ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
+
 		ItemMeta im = item.getItemMeta();
+		ItemMeta bowMeta = bow.getItemMeta();
+		ItemMeta bootsMeta = boots.getItemMeta();
+
 		List<String> lore = new ArrayList<String>();
-		
+		List<String> bowLore = new ArrayList<String>();
+		List<String> bootsLore = new ArrayList<String>();
+
 		lore.add(plugin.lifeSteal.loreColor + Main.getInstance().lifeSteal.getName() + " II");
 		lore.add(plugin.deepWounds.loreColor + plugin.deepWounds.getName() + " I");
 		lore.add(plugin.headless.loreColor + plugin.headless.getName() + " III");
+
+		bowLore.add(plugin.tempest.loreColor + plugin.tempest.getName() + " I");
+
+		bootsLore.add(plugin.swiftFoot.loreColor + plugin.swiftFoot.getName() + " I");
 		
 		im.setLore(lore);
 		im.addEnchant(plugin.lifeSteal, 2, false);
 		im.addEnchant(plugin.deepWounds, 1, false);
 		im.addEnchant(plugin.headless, 3, false);
 
+		bowMeta.setLore(bowLore);
+		bowMeta.addEnchant(plugin.tempest, 1, false);
+
+		bootsMeta.setLore(bootsLore);
+		bootsMeta.addEnchant(plugin.swiftFoot, 1, false);
+
 		item.setItemMeta(im);
+		bow.setItemMeta(bowMeta);
+		boots.setItemMeta(bootsMeta);
+
 		e.getPlayer().getInventory().addItem(item);
+		e.getPlayer().getInventory().addItem(bow);
+		e.getPlayer().getInventory().addItem(boots);
 	}
 
 	@Override
