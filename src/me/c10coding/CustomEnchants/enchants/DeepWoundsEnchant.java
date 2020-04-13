@@ -44,8 +44,11 @@ public class DeepWoundsEnchant extends CustomEnchant{
 				int i = rnd.nextInt(100);
 				if(i < chance){
 					if(entityHit.hasMetadata("hasDeepWounds")){
+						Bukkit.broadcastMessage("has deep wounds");
 						return;
 					}else{
+						Bukkit.broadcastMessage("Doesn't have deep wounds");
+
 						entityHit.setMetadata("hasDeepWounds", new FixedMetadataValue(plugin, true));
 
 						new BukkitRunnable() {
@@ -70,18 +73,11 @@ public class DeepWoundsEnchant extends CustomEnchant{
 								}
 								counter++;
 							}
-
 						}.runTaskTimer(plugin, 0L, 20L);
-
 					}
-
-
 				}
+			}
 		}
-
-			
-		}
-		
 	}
 
 	@Override

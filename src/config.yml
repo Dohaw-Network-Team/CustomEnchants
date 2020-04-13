@@ -32,3 +32,20 @@ Enchants:
       5: .50
   Crippling_Shot:
     SlownessLength: 2.5
+  Shuffle_Shot:
+    CooldownPerLevel:
+      1: 30
+      2: 20
+      3: 10
+  Wither_Blow:
+    ChancePerLevel:
+      1: 10
+      2: 25
+      3: 40
+    WitherLength: 6
+  Wither_Shot:
+    ChancePerLevel:
+      1: 25
+      2: 35
+      3: 45
+    WitherLength: 6

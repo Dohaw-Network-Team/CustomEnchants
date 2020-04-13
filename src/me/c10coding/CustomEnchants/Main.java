@@ -9,6 +9,7 @@ import me.c10coding.CustomEnchants.enchants.*;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Wither;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin{
@@ -22,6 +23,9 @@ public class Main extends JavaPlugin{
 	public static CustomEnchant swiftFoot;
 	public static CustomEnchant chestImplants;
 	public static CustomEnchant cripplingShot;
+	public static CustomEnchant shuffleShot;
+	public static CustomEnchant witherBlow;
+	public static CustomEnchant witherShot;
 
 	private ArrayList<Enchantment> enchantList = new ArrayList<Enchantment>();
 	
@@ -45,6 +49,9 @@ public class Main extends JavaPlugin{
 		swiftFoot = new SwiftFootEnchant();
 		chestImplants = new ChestImplantsEnchant();
 		cripplingShot = new CripplingShotEnchant();
+		shuffleShot = new ShuffleShotEnchant();
+		witherBlow = new WitherBlowEnchant();
+		witherShot = new WitherShotEnchant();
 		
 		enchantList.add(lifeSteal);
 		enchantList.add(deepWounds);
@@ -53,6 +60,9 @@ public class Main extends JavaPlugin{
 		enchantList.add(swiftFoot);
 		enchantList.add(chestImplants);
 		enchantList.add(cripplingShot);
+		enchantList.add(shuffleShot);
+		enchantList.add(witherBlow);
+		enchantList.add(witherShot);
 
 		for(Enchantment e : enchantList) {
 			registerEnchantment(e);

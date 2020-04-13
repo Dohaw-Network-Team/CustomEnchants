@@ -4,7 +4,6 @@ import me.c10coding.CustomEnchants.utils.EnchantmentKeys;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Particle;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
@@ -13,21 +12,19 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
-import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.potion.PotionType;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class CripplingShotEnchant extends CustomEnchant{
+public class WitherShotEnchant extends CustomEnchant {
 
-    Map<Arrow, Integer> arrowMap = new HashMap<Arrow, Integer>();
-    final double slownessLength = config.getDouble(configPath + ".SlownessLength") * 20;
+    private HashMap<Arrow, Integer> arrowMap = new HashMap<Arrow, Integer>();
+    private double length = config.getDouble(configPath + "WitherLength");
 
-    public CripplingShotEnchant(){
-        super(EnchantmentKeys.crippling_shot, ChatColor.YELLOW, Particle.SPELL);
+    public WitherShotEnchant(){
+        super(EnchantmentKeys.wither_shot, ChatColor.DARK_AQUA, Particle.SPELL);
         Bukkit.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
@@ -42,16 +39,19 @@ public class CripplingShotEnchant extends CustomEnchant{
                     LivingEntity le = (LivingEntity) en;
                     for (Map.Entry<Arrow, Integer> a : arrowMap.entrySet()) {
                         if (a.getKey().equals(arrow)) {
+
                             int lvl = a.getValue();
-                            if(lvl == 1)
-                                le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, (int) slownessLength, 0));
-                            else
-                                le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, (int) slownessLength, 1));
-                            le.getWorld().spawnParticle(enchantParticle, le.getLocation(), 10);
+                            double chance = getChance(lvl);
+
+                            int i = rnd.nextInt(100);
+                            if(i < chance){
+                                le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, (int)(length * 20), 0));
+                                le.getWorld().spawnParticle(enchantParticle, le.getLocation(), 50);
+                            }
+
                         }
                     }
                 }
-
             }
         }
     }
@@ -71,11 +71,11 @@ public class CripplingShotEnchant extends CustomEnchant{
 
     @Override
     public int getMaxLevel() {
-        return 2;
+        return 3;
     }
 
     @Override
     public EnchantmentTarget getItemTarget() {
-        return EnchantmentTarget.BOW;
+        return null;
     }
 }

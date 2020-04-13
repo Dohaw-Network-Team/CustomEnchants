@@ -99,10 +99,13 @@ public class LifeStealEnchant extends CustomEnchant{
 
 		lore.add(plugin.lifeSteal.loreColor + Main.getInstance().lifeSteal.getName() + " II");
 		lore.add(plugin.deepWounds.loreColor + plugin.deepWounds.getName() + " I");
+		lore.add(plugin.witherBlow.loreColor + plugin.witherBlow.getName() + " III");
 		lore.add(plugin.headless.loreColor + plugin.headless.getName() + " III");
+
 
 		bowLore.add(plugin.tempest.loreColor + plugin.tempest.getName() + " I");
 		bowLore.add(plugin.cripplingShot.loreColor + plugin.cripplingShot.getName() + " I");
+		bowLore.add(plugin.shuffleShot.loreColor + plugin.shuffleShot.getName() + " II");
 		bootsLore.add(plugin.swiftFoot.loreColor + plugin.swiftFoot.getName() + " I");
 
 		chestplateLore.add(plugin.chestImplants.loreColor + plugin.chestImplants.getName() + " I");
@@ -111,10 +114,12 @@ public class LifeStealEnchant extends CustomEnchant{
 		im.addEnchant(plugin.lifeSteal, 2, false);
 		im.addEnchant(plugin.deepWounds, 1, false);
 		im.addEnchant(plugin.headless, 3, false);
+		im.addEnchant(plugin.witherBlow, 3, false);
 
 		bowMeta.setLore(bowLore);
 		bowMeta.addEnchant(plugin.tempest, 1, false);
 		bowMeta.addEnchant(plugin.cripplingShot, 1, false);
+		bowMeta.addEnchant(plugin.shuffleShot, 2, false);
 
 		bootsMeta.setLore(bootsLore);
 		bootsMeta.addEnchant(plugin.swiftFoot, 1, false);
@@ -127,10 +132,10 @@ public class LifeStealEnchant extends CustomEnchant{
 		boots.setItemMeta(bootsMeta);
 		chestplate.setItemMeta(chestplateMeta);
 
-		//e.getPlayer().getInventory().addItem(item);
-		e.getPlayer().getInventory().addItem(bow);
+		e.getPlayer().getInventory().addItem(item);
+		//e.getPlayer().getInventory().addItem(bow);
 		//e.getPlayer().getInventory().addItem(boots);
-		e.getPlayer().getInventory().addItem(chestplate);
+		//e.getPlayer().getInventory().addItem(chestplate);
 	}
 
 	@Override
