@@ -16,7 +16,7 @@ public enum EnchantmentKeys {
 	advanced_bow,
 	molten,
 	enlightening,
-	muscle_taxing,
+	muscle_sap,
 	frozen_touch,
 	music_to_ears,
 	undying_surge,

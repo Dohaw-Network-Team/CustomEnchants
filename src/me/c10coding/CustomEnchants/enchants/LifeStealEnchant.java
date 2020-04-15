@@ -110,8 +110,11 @@ public class LifeStealEnchant extends CustomEnchant{
 		bowLore.add(plugin.witherShot.loreColor + plugin.witherShot.getName() + " I");
 		bowLore.add(plugin.piercing.loreColor + plugin.piercing.getName() + " I");
 		bootsLore.add(plugin.swiftFoot.loreColor + plugin.swiftFoot.getName() + " I");
+		bootsLore.add(plugin.enlightening.loreColor + plugin.enlightening.getName() + " I");
+		bootsLore.add(plugin.molten.loreColor + plugin.molten.getName() + " I");
 
 		chestplateLore.add(plugin.chestImplants.loreColor + plugin.chestImplants.getName() + " I");
+		chestplateLore.add(plugin.molten.loreColor + plugin.molten.getName() + " I");
 
 		im.setLore(lore);
 		im.addEnchant(plugin.lifeSteal, 2, false);
@@ -128,19 +131,22 @@ public class LifeStealEnchant extends CustomEnchant{
 
 		bootsMeta.setLore(bootsLore);
 		bootsMeta.addEnchant(plugin.swiftFoot, 1, false);
+		bootsMeta.addEnchant(plugin.enlightening, 1, false);
+		bootsMeta.addEnchant(plugin.molten, 1, false);
 
 		chestplateMeta.setLore(chestplateLore);
 		chestplateMeta.addEnchant(plugin.chestImplants, 1, false);
+		chestplateMeta.addEnchant(plugin.molten, 1, false);
 
 		item.setItemMeta(im);
 		bow.setItemMeta(bowMeta);
 		boots.setItemMeta(bootsMeta);
 		chestplate.setItemMeta(chestplateMeta);
 
-		e.getPlayer().getInventory().addItem(item);
+		//e.getPlayer().getInventory().addItem(item);
 		e.getPlayer().getInventory().addItem(bow);
-		//e.getPlayer().getInventory().addItem(boots);
-		//e.getPlayer().getInventory().addItem(chestplate);
+		e.getPlayer().getInventory().addItem(boots);
+		e.getPlayer().getInventory().addItem(chestplate);
 	}
 
 	@Override

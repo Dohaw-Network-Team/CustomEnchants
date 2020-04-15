@@ -49,7 +49,11 @@ public abstract class CustomEnchant extends Enchantment implements Listener{
 		}
 		
 	}
-	
+
+	public int getRandInt(){
+		return rnd.nextInt(100);
+	}
+
 	public Double getChance(int lvl) {
 		String configName = name.replace(" ", "_");
 		return plugin.getConfig().getDouble("Enchants." + configName + ".ChancePerLevel." + lvl);
