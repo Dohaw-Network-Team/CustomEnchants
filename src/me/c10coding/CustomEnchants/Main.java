@@ -26,6 +26,7 @@ public class Main extends JavaPlugin{
 	public static CustomEnchant shuffleShot;
 	public static CustomEnchant witherBlow;
 	public static CustomEnchant witherShot;
+	public static CustomEnchant piercing;
 
 	private ArrayList<Enchantment> enchantList = new ArrayList<Enchantment>();
 	
@@ -52,6 +53,7 @@ public class Main extends JavaPlugin{
 		shuffleShot = new ShuffleShotEnchant();
 		witherBlow = new WitherBlowEnchant();
 		witherShot = new WitherShotEnchant();
+		piercing = new PiercingEnchant();
 		
 		enchantList.add(lifeSteal);
 		enchantList.add(deepWounds);
@@ -63,6 +65,7 @@ public class Main extends JavaPlugin{
 		enchantList.add(shuffleShot);
 		enchantList.add(witherBlow);
 		enchantList.add(witherShot);
+		enchantList.add(piercing);
 
 		for(Enchantment e : enchantList) {
 			registerEnchantment(e);

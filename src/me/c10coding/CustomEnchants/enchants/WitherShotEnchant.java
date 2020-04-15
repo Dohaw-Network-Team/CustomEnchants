@@ -32,23 +32,26 @@ public class WitherShotEnchant extends CustomEnchant {
     public void onArrowHit(EntityDamageByEntityEvent e){
         Entity en = e.getEntity();
 
-        if(e.getDamager() instanceof Arrow) {
-            Arrow arrow = (Arrow) e.getDamager();
-            if (arrow.getShooter() instanceof Player) {
-                if(en instanceof LivingEntity){
-                    LivingEntity le = (LivingEntity) en;
-                    for (Map.Entry<Arrow, Integer> a : arrowMap.entrySet()) {
-                        if (a.getKey().equals(arrow)) {
 
-                            int lvl = a.getValue();
-                            double chance = getChance(lvl);
+        if(!e.isCancelled()) {
+            if (e.getDamager() instanceof Arrow) {
+                Arrow arrow = (Arrow) e.getDamager();
+                if (arrow.getShooter() instanceof Player) {
+                    if (en instanceof LivingEntity) {
+                        LivingEntity le = (LivingEntity) en;
+                        for (Map.Entry<Arrow, Integer> a : arrowMap.entrySet()) {
+                            if (a.getKey().equals(arrow)) {
 
-                            int i = rnd.nextInt(100);
-                            if(i < chance){
-                                le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, (int)(length * 20), 0));
-                                le.getWorld().spawnParticle(enchantParticle, le.getLocation(), 50);
+                                int lvl = a.getValue();
+                                double chance = getChance(lvl);
+
+                                int i = rnd.nextInt(100);
+                                if (i < chance) {
+                                    le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, (int) (length * 20), 0));
+                                    le.getWorld().spawnParticle(enchantParticle, le.getLocation(), 50);
+                                }
+
                             }
-
                         }
                     }
                 }

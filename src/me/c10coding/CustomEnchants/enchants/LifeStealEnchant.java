@@ -38,42 +38,44 @@ public class LifeStealEnchant extends CustomEnchant{
 	
 	@EventHandler
 	public void onPlayerHit(EntityDamageByEntityEvent e) {
-		
-		if(!(e.getDamager() instanceof Player)) return;
-		
-		if(!(e.getEntity() instanceof LivingEntity)) return; 
 
-		Player p = (Player) e.getDamager();	
-		LivingEntity playerHit = (LivingEntity) e.getEntity();
-		ItemStack itemInHand = p.getItemInHand();
 
-		if(itemInHand.hasItemMeta() && itemInHand.getItemMeta().hasEnchants() && itemInHand != null){
-			if(itemInHand.getItemMeta().getEnchants().containsKey(Enchantment.getByKey(plugin.lifeSteal.getKey()))) {
+		if(!e.isCancelled()) {
+			if (!(e.getDamager() instanceof Player)) return;
 
-				double chance = getChance(itemInHand.getItemMeta().getEnchantLevel(this));
+			if (!(e.getEntity() instanceof LivingEntity)) return;
 
-				int i = rnd.nextInt(100);
+			Player p = (Player) e.getDamager();
+			LivingEntity playerHit = (LivingEntity) e.getEntity();
+			ItemStack itemInHand = p.getItemInHand();
 
-				if(i < chance) {
+			if (itemInHand.hasItemMeta() && itemInHand.getItemMeta().hasEnchants() && itemInHand != null) {
+				if (itemInHand.getItemMeta().getEnchants().containsKey(Enchantment.getByKey(plugin.lifeSteal.getKey()))) {
 
-					double playerHealth = p.getHealth();
-					double playerHitHealth = playerHit.getHealth();
+					double chance = getChance(itemInHand.getItemMeta().getEnchantLevel(this));
 
-					try {
-						p.setHealth(playerHealth + 1);
-					}catch(IllegalArgumentException il) {
-						double playerMaxHP = p.getMaxHealth();
-						p.setHealth(playerMaxHP);
+					int i = rnd.nextInt(100);
+
+					if (i < chance) {
+
+						double playerHealth = p.getHealth();
+						double playerHitHealth = playerHit.getHealth();
+
+						try {
+							p.setHealth(playerHealth + 1);
+						} catch (IllegalArgumentException il) {
+							double playerMaxHP = p.getMaxHealth();
+							p.setHealth(playerMaxHP);
+						}
+						p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Chat.chat("&b&l[&a&l+1 HP!&b&l]")));
+
+						playerHit.setHealth(playerHitHealth - 1);
+						p.getWorld().spawnParticle(enchantParticle, p.getLocation().getX(), p.getLocation().getY(), p.getLocation().getZ(), 10);
 					}
-					p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Chat.chat("&b&l[&a&l+1 HP!&b&l]")));
 
-					playerHit.setHealth(playerHitHealth - 1);
-					p.getWorld().spawnParticle(enchantParticle, p.getLocation().getX(), p.getLocation().getY(), p.getLocation().getZ(), 10);
 				}
-
 			}
 		}
-
 
 	}
 	
@@ -102,10 +104,11 @@ public class LifeStealEnchant extends CustomEnchant{
 		lore.add(plugin.witherBlow.loreColor + plugin.witherBlow.getName() + " III");
 		lore.add(plugin.headless.loreColor + plugin.headless.getName() + " III");
 
-
 		bowLore.add(plugin.tempest.loreColor + plugin.tempest.getName() + " I");
 		bowLore.add(plugin.cripplingShot.loreColor + plugin.cripplingShot.getName() + " I");
 		bowLore.add(plugin.shuffleShot.loreColor + plugin.shuffleShot.getName() + " II");
+		bowLore.add(plugin.witherShot.loreColor + plugin.witherShot.getName() + " I");
+		bowLore.add(plugin.piercing.loreColor + plugin.piercing.getName() + " I");
 		bootsLore.add(plugin.swiftFoot.loreColor + plugin.swiftFoot.getName() + " I");
 
 		chestplateLore.add(plugin.chestImplants.loreColor + plugin.chestImplants.getName() + " I");
@@ -120,6 +123,8 @@ public class LifeStealEnchant extends CustomEnchant{
 		bowMeta.addEnchant(plugin.tempest, 1, false);
 		bowMeta.addEnchant(plugin.cripplingShot, 1, false);
 		bowMeta.addEnchant(plugin.shuffleShot, 2, false);
+		bowMeta.addEnchant(plugin.witherShot, 1, false);
+		bowMeta.addEnchant(plugin.piercing, 1, false);
 
 		bootsMeta.setLore(bootsLore);
 		bootsMeta.addEnchant(plugin.swiftFoot, 1, false);
@@ -133,7 +138,7 @@ public class LifeStealEnchant extends CustomEnchant{
 		chestplate.setItemMeta(chestplateMeta);
 
 		e.getPlayer().getInventory().addItem(item);
-		//e.getPlayer().getInventory().addItem(bow);
+		e.getPlayer().getInventory().addItem(bow);
 		//e.getPlayer().getInventory().addItem(boots);
 		//e.getPlayer().getInventory().addItem(chestplate);
 	}

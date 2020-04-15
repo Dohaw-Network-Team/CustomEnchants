@@ -26,54 +26,55 @@ public class DeepWoundsEnchant extends CustomEnchant{
 	
 	@EventHandler
 	public void onPlayerHit(final EntityDamageByEntityEvent e) {
-		if(!(e.getDamager() instanceof Player)) return;
 
-		if(!(e.getEntity() instanceof LivingEntity)) return;
+		if(!e.isCancelled()){
+			if(!(e.getDamager() instanceof Player)) return;
 
-		Player p = (Player) e.getDamager();	
-		final LivingEntity entityHit = (LivingEntity) e.getEntity();
-		ItemStack itemInHand = p.getItemInHand();
-		ItemMeta im = itemInHand.getItemMeta();
+			if(!(e.getEntity() instanceof LivingEntity)) return;
 
-		/*
-		 * Bleeding will be <damagePercentage> (variable) of the damage done
-		 */
-		if(itemInHand != null && itemInHand.hasItemMeta() && im.hasEnchants()){
-			if(im.getEnchants().containsKey(Enchantment.getByKey(this.getKey()))) {
-				double chance = getChance(im.getEnchantLevel(this));
-				int i = rnd.nextInt(100);
-				if(i < chance){
-					if(entityHit.hasMetadata("hasDeepWounds")){
-						Bukkit.broadcastMessage("has deep wounds");
-						return;
-					}else{
-						Bukkit.broadcastMessage("Doesn't have deep wounds");
+			Player p = (Player) e.getDamager();
+			final LivingEntity entityHit = (LivingEntity) e.getEntity();
+			ItemStack itemInHand = p.getItemInHand();
+			ItemMeta im = itemInHand.getItemMeta();
 
-						entityHit.setMetadata("hasDeepWounds", new FixedMetadataValue(plugin, true));
+			/*
+			 * Bleeding will be <damagePercentage> (variable) of the damage done
+			 */
+			if(itemInHand != null && itemInHand.hasItemMeta() && im.hasEnchants()){
+				if(im.getEnchants().containsKey(Enchantment.getByKey(this.getKey()))) {
+					double chance = getChance(im.getEnchantLevel(this));
+					int i = rnd.nextInt(100);
+					if(i < chance){
+						if(entityHit.hasMetadata("hasDeepWounds")){
+							return;
+						}else{
 
-						new BukkitRunnable() {
-							int counter = 0;
-							double dmgDone = e.getDamage();
-							double dmgBleeding = dmgDone * damagePercentage;
-							@Override
-							public void run() {
-								double entityHitHealth = entityHit.getHealth();
-								if(counter < lengthBleeding) {
-									entityHit.getWorld().spawnParticle(enchantParticle, entityHit.getLocation(), 10, new Particle.DustOptions(Color.RED, 20));
-									try{
-										entityHit.setHealth(entityHitHealth - dmgBleeding);
-										entityHit.playEffect(EntityEffect.HURT);
-									}catch(IllegalArgumentException e){
-										entityHit.setHealth(0);
+							entityHit.setMetadata("hasDeepWounds", new FixedMetadataValue(plugin, true));
+
+							new BukkitRunnable() {
+								int counter = 0;
+								double dmgDone = e.getDamage();
+								double dmgBleeding = dmgDone * damagePercentage;
+								@Override
+								public void run() {
+									double entityHitHealth = entityHit.getHealth();
+									if(counter < lengthBleeding) {
+										entityHit.getWorld().spawnParticle(enchantParticle, entityHit.getLocation(), 10, new Particle.DustOptions(Color.RED, 20));
+										try{
+											entityHit.setHealth(entityHitHealth - dmgBleeding);
+											entityHit.playEffect(EntityEffect.HURT);
+										}catch(IllegalArgumentException e){
+											entityHit.setHealth(0);
+											this.cancel();
+										}
+									}else {
+										entityHit.removeMetadata("hasDeepWounds", plugin);
 										this.cancel();
 									}
-								}else {
-									entityHit.removeMetadata("hasDeepWounds", plugin);
-									this.cancel();
+									counter++;
 								}
-								counter++;
-							}
-						}.runTaskTimer(plugin, 0L, 20L);
+							}.runTaskTimer(plugin, 0L, 20L);
+						}
 					}
 				}
 			}

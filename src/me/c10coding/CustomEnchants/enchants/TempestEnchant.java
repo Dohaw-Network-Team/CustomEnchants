@@ -35,20 +35,22 @@ public class TempestEnchant extends CustomEnchant {
     public void onArrowHit(EntityDamageByEntityEvent e) {
         Entity en = e.getEntity();
 
-        if (e.getDamager() instanceof Arrow) {
-            Arrow arrow = (Arrow) e.getDamager();
-            if (arrow.getShooter() instanceof Player) {
-                Iterator<Map.Entry<Arrow, Integer>> itr = arrowMap.entrySet().iterator();
-                while (itr.hasNext()) {
-                    Map.Entry me = (Map.Entry) itr.next();
-                    if (me.getKey().equals(arrow)) {
-                        //This is the arrow that was shot earlier and has the lightning enchant on it
-                        gettingStruck.add(en);
-                        for (int x = 0; x < (int) me.getValue(); x++) {
-                            en.getWorld().strikeLightning(en.getLocation());
+        if(!e.isCancelled()){
+            if (e.getDamager() instanceof Arrow) {
+                Arrow arrow = (Arrow) e.getDamager();
+                if (arrow.getShooter() instanceof Player) {
+                    Iterator<Map.Entry<Arrow, Integer>> itr = arrowMap.entrySet().iterator();
+                    while (itr.hasNext()) {
+                        Map.Entry me = (Map.Entry) itr.next();
+                        if (me.getKey().equals(arrow)) {
+                            //This is the arrow that was shot earlier and has the lightning enchant on it
+                            gettingStruck.add(en);
+                            for (int x = 0; x < (int) me.getValue(); x++) {
+                                en.getWorld().strikeLightning(en.getLocation());
+                            }
+                            //Removes arrow after it's done with its business
+                            itr.remove();
                         }
-                        //Removes arrow after it's done with its business
-                        itr.remove();
                     }
                 }
             }

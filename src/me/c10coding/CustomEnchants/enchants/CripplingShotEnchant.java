@@ -35,23 +35,25 @@ public class CripplingShotEnchant extends CustomEnchant{
     public void onArrowHit(EntityDamageByEntityEvent e){
         Entity en = e.getEntity();
 
-        if(e.getDamager() instanceof Arrow) {
-            Arrow arrow = (Arrow) e.getDamager();
-            if (arrow.getShooter() instanceof Player) {
-                if(en instanceof LivingEntity){
-                    LivingEntity le = (LivingEntity) en;
-                    for (Map.Entry<Arrow, Integer> a : arrowMap.entrySet()) {
-                        if (a.getKey().equals(arrow)) {
-                            int lvl = a.getValue();
-                            if(lvl == 1)
-                                le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, (int) slownessLength, 0));
-                            else
-                                le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, (int) slownessLength, 1));
-                            le.getWorld().spawnParticle(enchantParticle, le.getLocation(), 10);
+        if(!e.isCancelled()){
+            if(e.getDamager() instanceof Arrow) {
+                Arrow arrow = (Arrow) e.getDamager();
+                if (arrow.getShooter() instanceof Player) {
+                    if(en instanceof LivingEntity){
+                        LivingEntity le = (LivingEntity) en;
+                        for (Map.Entry<Arrow, Integer> a : arrowMap.entrySet()) {
+                            if (a.getKey().equals(arrow)) {
+                                int lvl = a.getValue();
+                                if(lvl == 1)
+                                    le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, (int) slownessLength, 0));
+                                else
+                                    le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, (int) slownessLength, 1));
+                                le.getWorld().spawnParticle(enchantParticle, le.getLocation(), 10);
+                            }
                         }
                     }
-                }
 
+                }
             }
         }
     }

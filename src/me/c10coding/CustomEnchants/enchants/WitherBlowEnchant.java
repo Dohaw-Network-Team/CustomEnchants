@@ -24,24 +24,26 @@ public class WitherBlowEnchant extends CustomEnchant{
 
     @EventHandler
     public void onPlayerHit(EntityDamageByEntityEvent e){
-        if(e.getEntity() instanceof LivingEntity && e.getDamager() instanceof Player){
-            LivingEntity le = (LivingEntity) e.getEntity();
-            Player damager = (Player) e.getDamager();
 
-            if(damager.getItemInHand().getType().name().toLowerCase().contains("sword") || damager.getItemInHand().getType().name().toLowerCase().contains("axe")){
-                ItemStack weapon = damager.getItemInHand();
-                if(weapon.hasItemMeta() && weapon.getItemMeta().hasEnchant(this)){
-                    int lvl = weapon.getItemMeta().getEnchantLevel(this);
-                    double chance = getChance(lvl);
+        if(!e.isCancelled()) {
+            if (e.getEntity() instanceof LivingEntity && e.getDamager() instanceof Player) {
+                LivingEntity le = (LivingEntity) e.getEntity();
+                Player damager = (Player) e.getDamager();
 
-                    int i = rnd.nextInt(100);
-                    if(i < chance){
-                        le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, (int)(length * 20), 0));
-                        le.getWorld().spawnParticle(enchantParticle, le.getLocation(), 50);
+                if (damager.getItemInHand().getType().name().toLowerCase().contains("sword") || damager.getItemInHand().getType().name().toLowerCase().contains("axe")) {
+                    ItemStack weapon = damager.getItemInHand();
+                    if (weapon.hasItemMeta() && weapon.getItemMeta().hasEnchant(this)) {
+                        int lvl = weapon.getItemMeta().getEnchantLevel(this);
+                        double chance = getChance(lvl);
+
+                        int i = rnd.nextInt(100);
+                        if (i < chance) {
+                            le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, (int) (length * 20), 0));
+                            le.getWorld().spawnParticle(enchantParticle, le.getLocation(), 50);
+                        }
                     }
                 }
             }
-
         }
     }
 

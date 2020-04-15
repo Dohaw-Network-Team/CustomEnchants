@@ -51,7 +51,11 @@ public class HeadlessEnchant extends CustomEnchant{
                    return;
                }
            }
+           //Fixes the problem to where meta deta for deep wounds would be true upon death and thus not ever applying to that player again when they respawned
+           p.removeMetadata("hasDeepWounds", plugin);
        }
+
+
 
     }
 

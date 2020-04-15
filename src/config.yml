@@ -49,3 +49,8 @@ Enchants:
       2: 35
       3: 45
     WitherLength: 6
+  Piercing:
+    ChancePerLevel:
+      1: 15
+      2: 30
+      3: 50

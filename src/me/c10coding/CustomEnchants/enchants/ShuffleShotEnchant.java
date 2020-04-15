@@ -65,25 +65,33 @@ public class ShuffleShotEnchant extends CustomEnchant{
         Entity hit = e.getEntity();
         Entity damager = e.getDamager();
 
-        if(damager instanceof Arrow){
-            Arrow arrow = (Arrow) damager;
-            if(arrow.getShooter() instanceof Player){
-                Player p = (Player) arrow.getShooter();
-                if(shuffleShotEnablers.containsKey(p.getUniqueId())){
+        if(!e.isCancelled()) {
+            if (damager instanceof Arrow) {
+                Arrow arrow = (Arrow) damager;
+                if (arrow.getShooter() instanceof Player) {
+                    Player p = (Player) arrow.getShooter();
+                    if (shuffleShotEnablers.containsKey(p.getUniqueId())) {
 
-                    double cooldown = config.getDouble(configPath + ".CooldownPerLevel." + shuffleShotEnablers.get(p.getUniqueId()));
-                    p.setMetadata("Shuffle_Shot_Cooldown", new FixedMetadataValue(plugin, cooldown));
+                        double cooldown = config.getDouble(configPath + ".CooldownPerLevel." + shuffleShotEnablers.get(p.getUniqueId()));
+                        p.setMetadata("Shuffle_Shot_Cooldown", new FixedMetadataValue(plugin, cooldown));
 
-                    Location damagerLocation = p.getLocation();
-                    Location hitEnityLocation = hit.getLocation();
+                        Location damagerLocation = p.getLocation();
+                        Location hitEnityLocation = hit.getLocation();
 
-                    p.teleport(hitEnityLocation);
-                    hit.teleport(damagerLocation);
+                    /*
+                    Solved the problem that happened when you also had Tempest on your bow
+                     */
+                        hitEnityLocation.setX(hitEnityLocation.getX() + 1.5);
+                        hitEnityLocation.setZ(hitEnityLocation.getZ() + 1.5);
 
-                    p.getWorld().spawnParticle(enchantParticle, p.getLocation(), 50);
-                    p.getWorld().spawnParticle(enchantParticle, hit.getLocation(), 50);
-                    shuffleShotEnablers.remove(p.getUniqueId());
+                        p.teleport(hitEnityLocation);
+                        hit.teleport(damagerLocation);
 
+                        p.getWorld().spawnParticle(enchantParticle, p.getLocation(), 50);
+                        p.getWorld().spawnParticle(enchantParticle, hit.getLocation(), 50);
+                        shuffleShotEnablers.remove(p.getUniqueId());
+
+                    }
                 }
             }
         }
