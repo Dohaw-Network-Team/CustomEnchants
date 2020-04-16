@@ -33,9 +33,12 @@ public class SwiftFootEnchant extends CustomEnchant{
         Inventory inv = p.getInventory();
         InventoryAction action = e.getAction();
 
+
+        if(e.getClickedInventory() == null) return;
+
         if(e.getCurrentItem() == null) return;
 
-        if(e.getSlotType().equals(InventoryType.SlotType.ARMOR) || e.getCurrentItem().getType().name().toLowerCase().contains("boots")){
+        if(e.getSlotType().equals(InventoryType.SlotType.ARMOR) && e.getCurrentItem().getType().name().toLowerCase().contains("boots")){
            if(action.equals(InventoryAction.PICKUP_ALL) || action.equals(InventoryAction.PLACE_ALL) || action.equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)){
                 if(e.getCurrentItem().getType().name().toLowerCase().contains("boots") || e.getCursor().getType().name().toLowerCase().contains("boots")){
                     ItemStack boots = e.getCurrentItem().getType().name().toLowerCase().contains("boots") ? e.getCurrentItem() : e.getCursor();

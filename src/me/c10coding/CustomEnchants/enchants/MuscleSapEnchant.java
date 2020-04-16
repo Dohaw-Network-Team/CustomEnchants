@@ -123,8 +123,9 @@ public class MuscleSapEnchant extends CustomEnchant {
                                     this.cancel();
                                 }else{
                                     playerHit.getWorld().spawnParticle(Particle.SLIME, playerHit.getLocation(), 10);
+                                    counter++;
                                 }
-                                counter++;
+
                             }
                         }.runTaskTimer(plugin, 0L, 20L);
                     }
