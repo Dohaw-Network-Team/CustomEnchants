@@ -81,29 +81,31 @@ public class LifeStealEnchant extends CustomEnchant{
 	
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent e) {
+
 		ItemStack item = new ItemStack(Material.STONE_SWORD, 1);
 		ItemStack bow = new ItemStack(Material.BOW, 1);
 		ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
-
 		ItemStack chestplate = new ItemStack(Material.LEATHER_CHESTPLATE);
+		ItemStack leggings = new ItemStack(Material.LEATHER_LEGGINGS);
+
 
 		ItemMeta im = item.getItemMeta();
 		ItemMeta bowMeta = bow.getItemMeta();
 		ItemMeta bootsMeta = boots.getItemMeta();
-
 		ItemMeta chestplateMeta = chestplate.getItemMeta();
+		ItemMeta leggingsMeta = leggings.getItemMeta();
 
 		List<String> lore = new ArrayList<String>();
 		List<String> bowLore = new ArrayList<String>();
 		List<String> bootsLore = new ArrayList<String>();
-
 		List<String> chestplateLore = new ArrayList<String>();
+		List<String> leggingsLore = new ArrayList<String>();
+
 
 		lore.add(plugin.lifeSteal.loreColor + Main.getInstance().lifeSteal.getName() + " II");
 		lore.add(plugin.deepWounds.loreColor + plugin.deepWounds.getName() + " I");
 		lore.add(plugin.witherBlow.loreColor + plugin.witherBlow.getName() + " III");
 		lore.add(plugin.headless.loreColor + plugin.headless.getName() + " III");
-
 		bowLore.add(plugin.tempest.loreColor + plugin.tempest.getName() + " I");
 		bowLore.add(plugin.cripplingShot.loreColor + plugin.cripplingShot.getName() + " I");
 		bowLore.add(plugin.shuffleShot.loreColor + plugin.shuffleShot.getName() + " II");
@@ -112,41 +114,44 @@ public class LifeStealEnchant extends CustomEnchant{
 		bootsLore.add(plugin.swiftFoot.loreColor + plugin.swiftFoot.getName() + " I");
 		bootsLore.add(plugin.enlightening.loreColor + plugin.enlightening.getName() + " I");
 		bootsLore.add(plugin.molten.loreColor + plugin.molten.getName() + " I");
-
 		chestplateLore.add(plugin.chestImplants.loreColor + plugin.chestImplants.getName() + " I");
 		chestplateLore.add(plugin.molten.loreColor + plugin.molten.getName() + " I");
+		leggingsLore.add(plugin.muscleSap.loreColor + plugin.muscleSap.getName() + " I");
+
 
 		im.setLore(lore);
+		bowMeta.setLore(bowLore);
+		bootsMeta.setLore(bootsLore);
+		chestplateMeta.setLore(chestplateLore);
+		leggingsMeta.setLore(leggingsLore);
+
 		im.addEnchant(plugin.lifeSteal, 2, false);
 		im.addEnchant(plugin.deepWounds, 1, false);
 		im.addEnchant(plugin.headless, 3, false);
 		im.addEnchant(plugin.witherBlow, 3, false);
-
-		bowMeta.setLore(bowLore);
 		bowMeta.addEnchant(plugin.tempest, 1, false);
 		bowMeta.addEnchant(plugin.cripplingShot, 1, false);
 		bowMeta.addEnchant(plugin.shuffleShot, 2, false);
 		bowMeta.addEnchant(plugin.witherShot, 1, false);
 		bowMeta.addEnchant(plugin.piercing, 1, false);
-
-		bootsMeta.setLore(bootsLore);
 		bootsMeta.addEnchant(plugin.swiftFoot, 1, false);
 		bootsMeta.addEnchant(plugin.enlightening, 1, false);
 		bootsMeta.addEnchant(plugin.molten, 1, false);
-
-		chestplateMeta.setLore(chestplateLore);
 		chestplateMeta.addEnchant(plugin.chestImplants, 1, false);
 		chestplateMeta.addEnchant(plugin.molten, 1, false);
+		leggingsMeta.addEnchant(plugin.muscleSap, 1, false);
 
 		item.setItemMeta(im);
 		bow.setItemMeta(bowMeta);
 		boots.setItemMeta(bootsMeta);
 		chestplate.setItemMeta(chestplateMeta);
+		leggings.setItemMeta(leggingsMeta);
 
-		//e.getPlayer().getInventory().addItem(item);
+		e.getPlayer().getInventory().addItem(item);
 		e.getPlayer().getInventory().addItem(bow);
 		e.getPlayer().getInventory().addItem(boots);
 		e.getPlayer().getInventory().addItem(chestplate);
+		e.getPlayer().getInventory().addItem(leggings);
 	}
 
 	@Override

@@ -29,6 +29,7 @@ public class Main extends JavaPlugin{
 	public static CustomEnchant piercing;
 	public static CustomEnchant enlightening;
 	public static CustomEnchant molten;
+	public static CustomEnchant muscleSap;
 
 	private ArrayList<Enchantment> enchantList = new ArrayList<Enchantment>();
 	
@@ -58,6 +59,7 @@ public class Main extends JavaPlugin{
 		piercing = new PiercingEnchant();
 		enlightening = new EnlighteningEnchant();
 		molten = new MoltenEnchant();
+		muscleSap = new MuscleSapEnchant();
 		
 		enchantList.add(lifeSteal);
 		enchantList.add(deepWounds);
@@ -72,6 +74,7 @@ public class Main extends JavaPlugin{
 		enchantList.add(piercing);
 		enchantList.add(enlightening);
 		enchantList.add(molten);
+		enchantList.add(muscleSap);
 
 		for(Enchantment e : enchantList) {
 			registerEnchantment(e);
