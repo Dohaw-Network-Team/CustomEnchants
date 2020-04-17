@@ -33,16 +33,21 @@ public class SwiftFootEnchant extends CustomEnchant{
 
         if(e.getCurrentItem() == null) return;
 
+        ItemStack playerBootSlot = p.getInventory().getBoots();
         ItemStack playerItem = e.getCurrentItem();
         AttributeManager am = new AttributeManager(Main.getInstance(), p);
-        if (playerBoots != null){
-            if (playerBoots.getItemMeta().hasEnchant(this)){
-                am.setSpeedModifiers(playerBoots.getItemMeta().getEnchantLevel(this));
+        if (e.getSlotType() == InventoryType.SlotType.ARMOR) {
+            if (playerItem.getType().name().equals("AIR") || playerItem.getType().name().endsWith("_BOOTS")){
+                if (playerBootSlot != null){
+                    if (Objects.requireNonNull(playerBootSlot.getItemMeta()).hasEnchant(this)) {
+                        am.reApplyClassSpeedModifier();
+                    }
+                }else{
+                        am.setSpeedModifiers(Objects.requireNonNull(playerBootSlot.getItemMeta()).getEnchantLevel(this));
+                    }
+                }
             }
-        }else if (playerBoots == null || !(playerBoots.getItemMeta().hasEnchant(this))){
-            am.reApplyClassSpeedModifier();
         }
-    }
 
     @Override
     public int getMaxLevel() {
