@@ -67,6 +67,7 @@ public class LifeStealEnchant extends CustomEnchant{
 							double playerMaxHP = p.getMaxHealth();
 							p.setHealth(playerMaxHP);
 						}
+
 						p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Chat.chat("&b&l[&a&l+1 HP!&b&l]")));
 
 						playerHit.setHealth(playerHitHealth - 1);
@@ -119,7 +120,6 @@ public class LifeStealEnchant extends CustomEnchant{
 		chestplateLore.add(plugin.molten.loreColor + plugin.molten.getName() + " I");
 		leggingsLore.add(plugin.muscleSap.loreColor + plugin.muscleSap.getName() + " I");
 		helmetLore.add(plugin.nightVision.loreColor + plugin.nightVision.getName() + " I");
-
 
 		im.setLore(lore);
 		bowMeta.setLore(bowLore);

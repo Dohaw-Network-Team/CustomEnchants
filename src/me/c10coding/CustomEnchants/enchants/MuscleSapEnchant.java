@@ -36,7 +36,7 @@ public class MuscleSapEnchant extends CustomEnchant {
     public MuscleSapEnchant(){
         super(EnchantmentKeys.muscle_sap, ChatColor.GREEN, Particle.BARRIER);
         Bukkit.getServer().getPluginManager().registerEvents(this, plugin);
-        new MuscleSapCooldown(plugin);
+        new MuscleSapCooldown(plugin).runTaskTimer(plugin, 0L, 20L);
     }
 
     @EventHandler
@@ -65,64 +65,63 @@ public class MuscleSapEnchant extends CustomEnchant {
             Player playerHit = (Player) enHit;
             Player playerDamager = (Player) enDamager;
 
-            if(!playerDamager.hasMetadata("Muscle_Sap_Cooldown")) {
+            if(!playerHit.hasMetadata("Muscle_Sap_Cooldown")) {
                 if (playerHit.getInventory().getLeggings() != null && playerHit.getInventory().getLeggings().hasItemMeta()) {
                     ItemStack leggings = playerHit.getInventory().getLeggings();
                     if (leggings.getItemMeta().hasEnchant(this)) {
+
                         int lvl = leggings.getItemMeta().getEnchantLevel(this);
                         double cooldown = config.getDouble(configPath + ".CooldownPerLevel." + lvl);
-                        double percentage = config.getDouble(configPath + ".DecreasePercentagePerLevel." + lvl);
 
                         AttributeManager am = new AttributeManager(Main.getInstance(), playerDamager);
-                        HashMap<String, Double> playerAttribute = am.getPlayerAttributes();
-                        HashMap<String, Double> temp = playerAttribute;
-                        playerAttributesMap.put(playerHit.getUniqueId(), playerAttribute);
+                        HashMap<String, Double> playerAttributes = am.getPlayerAttributes();
+                        final HashMap<String, Double> temp = (HashMap<String, Double>) playerAttributes.clone();
 
+                        playerAttributesMap.put(playerDamager.getUniqueId(), playerAttributes);
                         int lvlDecrease = lvl;
 
                         double newSpellPower = 1, newStrength = 1, newRangeDmg = 1, newToughness = 1;
 
                         if (temp.get("SpellPower") - lvlDecrease >= 1) {
-                            newSpellPower = temp.get("SpellPower") - lvlDecrease;
+                            newSpellPower = playerAttributes.get("SpellPower") - lvlDecrease;
                         }
 
                         if (temp.get("Strength") - lvlDecrease >= 1) {
-                            newStrength = temp.get("Strength") - lvlDecrease;
+                            newStrength = playerAttributes.get("Strength") - lvlDecrease;
                         }
 
                         if (temp.get("RangedDamage") - lvlDecrease >= 1) {
-                            newRangeDmg = temp.get("RangedDamage") - lvlDecrease;
+                            newRangeDmg = playerAttributes.get("RangedDamage") - lvlDecrease;
                         }
 
-                        if (temp.get("Tougness") - lvlDecrease >= 1) {
-                            newToughness = temp.get("Tougness") - lvlDecrease;
+                        if (temp.get("Toughness") - lvlDecrease >= 1) {
+                            newToughness = playerAttributes.get("Toughness") - lvlDecrease;
                         }
 
-                        temp.replace("SpellPower", newSpellPower);
-                        temp.replace("Strength", newStrength);
-                        temp.replace("RangedDamage", newRangeDmg);
-                        temp.replace("Tougness", newToughness);
+                        playerAttributes.replace("SpellPower", newSpellPower);
+                        playerAttributes.replace("Strength", newStrength);
+                        playerAttributes.replace("RangedDamage", newRangeDmg);
+                        playerAttributes.replace("Toughness", newToughness);
 
-                        am.setNewAttributes(temp, playerDamager);
-                        playerDamager.setMetadata("Muscle_Sap_Cooldown", new FixedMetadataValue(plugin, cooldown));
+                        am.setNewAttributes(playerAttributes, playerDamager);
 
-                        playerHit.getWorld().spawnParticle(enchantParticle, playerHit.getLocation(), 50);
-                        playerHit.spigot().sendMessage(new TextComponent(TextComponent.fromLegacyText("&b&l[&c&lMuscle Sap applied!&b&l]")));
+                        playerHit.setMetadata("Muscle_Sap_Cooldown", new FixedMetadataValue(plugin, cooldown));
+
+                        playerDamager.getWorld().spawnParticle(enchantParticle, playerDamager.getLocation(), 50);
+
+                        playerHit.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Chat.chat("&b&l[&a&lMuscle Sap Applied!&b&l]")));
 
                         new BukkitRunnable() {
                             int counter = 1;
 
                             @Override
                             public void run() {
-                                Bukkit.broadcastMessage("Testing");
-                                Bukkit.broadcastMessage(String.valueOf(counter));
                                 if (counter == MUSCLE_SAP_LENGTH) {
-                                    am.restoreAttributes(playerAttributesMap.get(playerHit.getUniqueId()), playerHit);
-                                    Bukkit.broadcastMessage("Player hit has had his attributes restored and back to normal");
-                                    Bukkit.broadcastMessage(playerAttributesMap.get(playerHit.getUniqueId()).toString());
+                                    am.restoreAttributes(temp, playerDamager);
+                                    playerAttributesMap.remove(playerDamager.getUniqueId());
                                     this.cancel();
                                 }else{
-                                    playerHit.getWorld().spawnParticle(Particle.SLIME, playerHit.getLocation(), 10);
+                                    playerDamager.getWorld().spawnParticle(enchantParticle, playerDamager.getLocation(), 10);
                                     counter++;
                                 }
 

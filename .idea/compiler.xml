@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="RandomTreasure" />
+        <module name="Clan" />
+        <module name="UtilsAPI" />
+        <module name="CustomEnchants" />
+        <module name="Classes" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Clan" target="1.8" />
+      <module name="Classes" target="1.8" />
+      <module name="CustomEnchants" target="8" />
+      <module name="RandomTreasure" target="1.8" />
+      <module name="UtilsAPI" target="1.7" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

@@ -21,8 +21,9 @@ public class MuscleSapCooldown extends BukkitRunnable {
     @Override
     public void run() {
         for(Player p : Bukkit.getServer().getOnlinePlayers()){
-            if(p.hasMetadata("Muscle_Sap_Cooldown")){
+            if(p.hasMetadata("Muscle_Sap_Cooldown") && !p.getMetadata("Muscle_Sap_Cooldown").isEmpty()){
                 int timeLeft = p.getMetadata("Muscle_Sap_Cooldown").get(0).asInt();
+                timeLeft--;
                 if(timeLeft != 0){
                     p.setMetadata("Muscle_Sap_Cooldown", new FixedMetadataValue(plugin, timeLeft));
                 }else{
