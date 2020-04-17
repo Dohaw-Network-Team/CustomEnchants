@@ -1,0 +1,6 @@
+name: CustomEnchants
+author: c10coding
+main: me.c10coding.CustomEnchants.Main
+version: 1.0
+api-version: 1.14
+depend: [Clans]
