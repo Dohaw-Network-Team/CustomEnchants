@@ -33,16 +33,14 @@ public class SwiftFootEnchant extends CustomEnchant{
 
         if(e.getCurrentItem() == null) return;
 
-        ItemStack playerBoots = p.getInventory().getBoots();
+        ItemStack playerItem = e.getCurrentItem();
         AttributeManager am = new AttributeManager(Main.getInstance(), p);
-        if (e.getSlotType().equals(InventoryType.SlotType.ARMOR)){
-            if (playerBoots != null){
-                if (Objects.requireNonNull(playerBoots.getItemMeta()).hasEnchant(this)){
-                    am.reApplyClassSpeedModifier();
-                }
-            }else if (playerBoots == null || !(playerBoots.getItemMeta().hasEnchant(this))){
+        if (playerBoots != null){
+            if (playerBoots.getItemMeta().hasEnchant(this)){
                 am.setSpeedModifiers(playerBoots.getItemMeta().getEnchantLevel(this));
             }
+        }else if (playerBoots == null || !(playerBoots.getItemMeta().hasEnchant(this))){
+            am.reApplyClassSpeedModifier();
         }
     }
 
