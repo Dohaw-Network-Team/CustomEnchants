@@ -87,20 +87,21 @@ public class LifeStealEnchant extends CustomEnchant{
 		ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
 		ItemStack chestplate = new ItemStack(Material.LEATHER_CHESTPLATE);
 		ItemStack leggings = new ItemStack(Material.LEATHER_LEGGINGS);
-
+		ItemStack helmet = new ItemStack(Material.DIAMOND_HELMET);
 
 		ItemMeta im = item.getItemMeta();
 		ItemMeta bowMeta = bow.getItemMeta();
 		ItemMeta bootsMeta = boots.getItemMeta();
 		ItemMeta chestplateMeta = chestplate.getItemMeta();
 		ItemMeta leggingsMeta = leggings.getItemMeta();
+		ItemMeta helmetMeta = helmet.getItemMeta();
 
 		List<String> lore = new ArrayList<String>();
 		List<String> bowLore = new ArrayList<String>();
 		List<String> bootsLore = new ArrayList<String>();
 		List<String> chestplateLore = new ArrayList<String>();
 		List<String> leggingsLore = new ArrayList<String>();
-
+		List<String> helmetLore = new ArrayList<>();
 
 		lore.add(plugin.lifeSteal.loreColor + Main.getInstance().lifeSteal.getName() + " II");
 		lore.add(plugin.deepWounds.loreColor + plugin.deepWounds.getName() + " I");
@@ -117,6 +118,7 @@ public class LifeStealEnchant extends CustomEnchant{
 		chestplateLore.add(plugin.chestImplants.loreColor + plugin.chestImplants.getName() + " I");
 		chestplateLore.add(plugin.molten.loreColor + plugin.molten.getName() + " I");
 		leggingsLore.add(plugin.muscleSap.loreColor + plugin.muscleSap.getName() + " I");
+		helmetLore.add(plugin.nightVision.loreColor + plugin.nightVision.getName() + " I");
 
 
 		im.setLore(lore);
@@ -124,6 +126,7 @@ public class LifeStealEnchant extends CustomEnchant{
 		bootsMeta.setLore(bootsLore);
 		chestplateMeta.setLore(chestplateLore);
 		leggingsMeta.setLore(leggingsLore);
+		helmetMeta.setLore(helmetLore);
 
 		im.addEnchant(plugin.lifeSteal, 2, false);
 		im.addEnchant(plugin.deepWounds, 1, false);
@@ -140,18 +143,21 @@ public class LifeStealEnchant extends CustomEnchant{
 		chestplateMeta.addEnchant(plugin.chestImplants, 1, false);
 		chestplateMeta.addEnchant(plugin.molten, 1, false);
 		leggingsMeta.addEnchant(plugin.muscleSap, 1, false);
+		helmet.addEnchantment(plugin.nightVision, 1);
 
 		item.setItemMeta(im);
 		bow.setItemMeta(bowMeta);
 		boots.setItemMeta(bootsMeta);
 		chestplate.setItemMeta(chestplateMeta);
 		leggings.setItemMeta(leggingsMeta);
+		helmet.setItemMeta(helmetMeta);
 
 		e.getPlayer().getInventory().addItem(item);
 		e.getPlayer().getInventory().addItem(bow);
 		e.getPlayer().getInventory().addItem(boots);
 		e.getPlayer().getInventory().addItem(chestplate);
 		e.getPlayer().getInventory().addItem(leggings);
+		e.getPlayer().getInventory().addItem(helmet);
 	}
 
 	@Override

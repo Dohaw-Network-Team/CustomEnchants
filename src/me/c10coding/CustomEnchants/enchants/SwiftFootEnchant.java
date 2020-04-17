@@ -42,18 +42,20 @@ public class SwiftFootEnchant extends CustomEnchant{
            if(action.equals(InventoryAction.PICKUP_ALL) || action.equals(InventoryAction.PLACE_ALL) || action.equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)){
                 if(e.getCurrentItem().getType().name().toLowerCase().contains("boots") || e.getCursor().getType().name().toLowerCase().contains("boots")){
                     ItemStack boots = e.getCurrentItem().getType().name().toLowerCase().contains("boots") ? e.getCurrentItem() : e.getCursor();
-                    if(boots.getItemMeta().hasEnchant(this)){
-                        AttributeManager am = new AttributeManager(Main.getInstance(), p);
-                        if(action.equals(InventoryAction.PICKUP_ALL)){
-                            am.reApplyClassSpeedModifier();
-                        }else if (action.equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)){
-                            if(p.getInventory().getBoots() == null){
-                                am.setSpeedModifiers(boots.getItemMeta().getEnchantLevel(this));
-                            }else{
+                    if (boots.getItemMeta() != null){
+                        if(boots.getItemMeta().hasEnchant(this)) {
+                            AttributeManager am = new AttributeManager(Main.getInstance(), p);
+                            if (action.equals(InventoryAction.PICKUP_ALL)) {
                                 am.reApplyClassSpeedModifier();
+                            } else if (action.equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
+                                if (p.getInventory().getBoots() == null) {
+                                    am.setSpeedModifiers(boots.getItemMeta().getEnchantLevel(this));
+                                } else {
+                                    am.reApplyClassSpeedModifier();
+                                }
+                            } else if (action.equals(InventoryAction.PLACE_ALL)) {
+                                am.setSpeedModifiers(boots.getItemMeta().getEnchantLevel(this));
                             }
-                        }else if(action.equals(InventoryAction.PLACE_ALL)){
-                            am.setSpeedModifiers(boots.getItemMeta().getEnchantLevel(this));
                         }
                     }
                 }
