@@ -30,14 +30,15 @@
   
   <repositories>
  	<!-- This adds the Spigot Maven repository to the build -->
-	    <repository>
-	        <id>spigot-repo</id>
-	        <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
-	    </repository>
         <repository>
             <id>dohaw-repo</id>
             <url>https://raw.githubusercontent.com/Dohaw-Network-Team/maven-repo/master/</url>
         </repository>
+	    <repository>
+	        <id>spigot-repo</id>
+	        <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+	    </repository>
+
 	</repositories>
   
   <dependencies>
@@ -52,7 +53,7 @@
       <dependency>
           <groupId>Classes</groupId>
           <artifactId>Classes</artifactId>
-          <version>1.0.1-SNAPSHOT</version>
+          <version>1.0.0-SNAPSHOT</version>
           <scope>provided</scope>
       </dependency>
 
