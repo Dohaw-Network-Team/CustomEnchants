@@ -73,3 +73,16 @@ Enchants:
       1: 30
       2: 25
       3: 25
+  Frozen_Touch:
+    DecreasedPercentagePerLevel:
+      1: 10
+      2: 13
+      3: 15
+    LengthPerLevel:
+      1: 5
+      2: 8
+      3: 8
+    ChancePerLevel:
+      1: 10
+      2: 15
+      3: 18

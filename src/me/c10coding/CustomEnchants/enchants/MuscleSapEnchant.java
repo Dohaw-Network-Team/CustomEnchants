@@ -16,16 +16,11 @@ import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 public class MuscleSapEnchant extends CustomEnchant {
@@ -43,27 +38,25 @@ public class MuscleSapEnchant extends CustomEnchant {
     public void onPlayerHit(EntityDamageByEntityEvent e){
 
         Entity enHit = e.getEntity();
-        Entity enDamager = e.getDamager() instanceof Player ? (Player) e.getDamager() : e.getDamager();
+        Entity enDamager = e.getDamager();
+        Player playerHit, playerDamager;
 
         if(enHit instanceof Player){
-
+            playerHit = (Player) e.getEntity();
             if (enDamager instanceof Arrow || enDamager instanceof Snowball || enDamager instanceof Fireball) {
                 Projectile en = (Projectile) enDamager;
                 if(!(en.getShooter() instanceof Player)){
                     return;
                 }else{
-                    enDamager = (Player) en.getShooter();
+                    playerDamager = (Player) en.getShooter();
                 }
             }else{
                 if(!(enDamager instanceof Player)){
                     return;
                 }else{
-                    enDamager = (Player) e.getDamager();
+                    playerDamager = (Player) e.getDamager();
                 }
             }
-
-            Player playerHit = (Player) enHit;
-            Player playerDamager = (Player) enDamager;
 
             if(!playerHit.hasMetadata("Muscle_Sap_Cooldown")) {
                 if (playerHit.getInventory().getLeggings() != null && playerHit.getInventory().getLeggings().hasItemMeta()) {
@@ -82,6 +75,13 @@ public class MuscleSapEnchant extends CustomEnchant {
 
                         double newSpellPower = 1, newStrength = 1, newRangeDmg = 1, newToughness = 1;
 
+                        /*
+                        The higher the level of Muscle Sap, the more it decreases your abilities.
+                        Right now, if the damager's attribute is level 1, they don't decrease at all.
+
+                        In the future, we can fix this to actually adjust the values of the speed instead of just adjusting the attribute number in the config.
+
+                         */
                         if (temp.get("SpellPower") - lvlDecrease >= 1) {
                             newSpellPower = playerAttributes.get("SpellPower") - lvlDecrease;
                         }

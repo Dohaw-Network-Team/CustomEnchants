@@ -61,16 +61,20 @@ public class LifeStealEnchant extends CustomEnchant{
 						double playerHealth = p.getHealth();
 						double playerHitHealth = playerHit.getHealth();
 
-						try {
+						if((playerHealth + 1) > p.getMaxHealth()){
+							p.setHealth(p.getMaxHealth());
+						}else{
 							p.setHealth(playerHealth + 1);
-						} catch (IllegalArgumentException il) {
-							double playerMaxHP = p.getMaxHealth();
-							p.setHealth(playerMaxHP);
+						}
+
+						if((playerHitHealth - 1) < 0){
+							playerHit.setHealth(0);
+						}else{
+							playerHit.setHealth(playerHitHealth - 1);
 						}
 
 						p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Chat.chat("&b&l[&a&l+1 HP!&b&l]")));
 
-						playerHit.setHealth(playerHitHealth - 1);
 						p.getWorld().spawnParticle(enchantParticle, p.getLocation().getX(), p.getLocation().getY(), p.getLocation().getZ(), 10);
 					}
 
@@ -104,22 +108,30 @@ public class LifeStealEnchant extends CustomEnchant{
 		List<String> leggingsLore = new ArrayList<String>();
 		List<String> helmetLore = new ArrayList<>();
 
+
 		lore.add(plugin.lifeSteal.loreColor + Main.getInstance().lifeSteal.getName() + " II");
 		lore.add(plugin.deepWounds.loreColor + plugin.deepWounds.getName() + " I");
 		lore.add(plugin.witherBlow.loreColor + plugin.witherBlow.getName() + " III");
 		lore.add(plugin.headless.loreColor + plugin.headless.getName() + " III");
+
 		bowLore.add(plugin.tempest.loreColor + plugin.tempest.getName() + " I");
 		bowLore.add(plugin.cripplingShot.loreColor + plugin.cripplingShot.getName() + " I");
 		bowLore.add(plugin.shuffleShot.loreColor + plugin.shuffleShot.getName() + " II");
 		bowLore.add(plugin.witherShot.loreColor + plugin.witherShot.getName() + " I");
 		bowLore.add(plugin.piercing.loreColor + plugin.piercing.getName() + " I");
+
 		bootsLore.add(plugin.swiftFoot.loreColor + plugin.swiftFoot.getName() + " I");
 		bootsLore.add(plugin.enlightening.loreColor + plugin.enlightening.getName() + " I");
 		bootsLore.add(plugin.molten.loreColor + plugin.molten.getName() + " I");
+
 		chestplateLore.add(plugin.chestImplants.loreColor + plugin.chestImplants.getName() + " I");
 		chestplateLore.add(plugin.molten.loreColor + plugin.molten.getName() + " I");
+		chestplateLore.add(plugin.frozenTouch.loreColor + plugin.frozenTouch.getName() + " I");
+
 		leggingsLore.add(plugin.muscleSap.loreColor + plugin.muscleSap.getName() + " I");
+
 		helmetLore.add(plugin.nightVision.loreColor + plugin.nightVision.getName() + " I");
+
 
 		im.setLore(lore);
 		bowMeta.setLore(bowLore);
@@ -132,18 +144,24 @@ public class LifeStealEnchant extends CustomEnchant{
 		im.addEnchant(plugin.deepWounds, 1, false);
 		im.addEnchant(plugin.headless, 3, false);
 		im.addEnchant(plugin.witherBlow, 3, false);
+
 		bowMeta.addEnchant(plugin.tempest, 1, false);
 		bowMeta.addEnchant(plugin.cripplingShot, 1, false);
 		bowMeta.addEnchant(plugin.shuffleShot, 2, false);
 		bowMeta.addEnchant(plugin.witherShot, 1, false);
 		bowMeta.addEnchant(plugin.piercing, 1, false);
+
 		bootsMeta.addEnchant(plugin.swiftFoot, 1, false);
 		bootsMeta.addEnchant(plugin.enlightening, 1, false);
 		bootsMeta.addEnchant(plugin.molten, 1, false);
+
 		chestplateMeta.addEnchant(plugin.chestImplants, 1, false);
 		chestplateMeta.addEnchant(plugin.molten, 1, false);
+		chestplateMeta.addEnchant(plugin.frozenTouch, 1, false);
+
 		leggingsMeta.addEnchant(plugin.muscleSap, 1, false);
-		helmet.addEnchantment(plugin.nightVision, 1);
+
+		helmetMeta.addEnchant(plugin.nightVision, 1, false);
 
 		item.setItemMeta(im);
 		bow.setItemMeta(bowMeta);
@@ -152,8 +170,8 @@ public class LifeStealEnchant extends CustomEnchant{
 		leggings.setItemMeta(leggingsMeta);
 		helmet.setItemMeta(helmetMeta);
 
-		e.getPlayer().getInventory().addItem(item);
-		e.getPlayer().getInventory().addItem(bow);
+		//e.getPlayer().getInventory().addItem(item);
+		//e.getPlayer().getInventory().addItem(bow);
 		e.getPlayer().getInventory().addItem(boots);
 		e.getPlayer().getInventory().addItem(chestplate);
 		e.getPlayer().getInventory().addItem(leggings);
