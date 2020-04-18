@@ -25,5 +25,5 @@ public enum EnchantmentKeys {
 	fast_learning,
 	shard_harvesting,
 	vandalorian_accelerator,
-	health_booster,
+	health_booster, extra_life,
 }
