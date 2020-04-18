@@ -9,14 +9,21 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.inventory.InventoryType.SlotType;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Objects;
+
+import static org.bukkit.event.Event.*;
 
 
 public class SwiftFootEnchant extends CustomEnchant{
@@ -28,7 +35,7 @@ public class SwiftFootEnchant extends CustomEnchant{
         Bukkit.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onInventoryClick(InventoryClickEvent e){
 
         Player p = (Player) e.getWhoClicked();
@@ -85,19 +92,56 @@ public class SwiftFootEnchant extends CustomEnchant{
             return;
         }
         if (e.getRawSlot() == 8) {
-            if (cursorItem.getType().name().equals("AIR") || cursorItem.getType().name().endsWith("_BOOTS")) {
-                if (!cursorItem.getType().name().equals("AIR") && !(currentItem == null)){
-                    if (Objects.requireNonNull(cursorItem.getItemMeta()).hasEnchant(this)) {
-                        am.setSpeedModifiers(Objects.requireNonNull(cursorItem.getItemMeta()).getEnchantLevel(this));
+            if (cursorItem.getType().name().equals("AIR") || cursorItem == null) {
+               if (currentItem.getItemMeta().hasEnchant(this)){
+                   am.reApplyClassSpeedModifier();
+               }
+            }else if (cursorItem.getType().name().endsWith("_BOOTS")){
+                if (!isAirOrNull(currentItem)) {
+                    if (currentItem.getItemMeta().hasEnchant(this)) {
+                        am.reApplyClassSpeedModifier();
                     }
-                }else {
-                    am.reApplyClassSpeedModifier();
+                }
+                if (cursorItem.getItemMeta().hasEnchant(this)){
+                    am.setSpeedModifiers(Objects.requireNonNull(cursorItem.getItemMeta()).getEnchantLevel(this));
                 }
             }
         }
         return;
     }
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void playerInteractEvent(PlayerInteractEvent e){
+        if(e.useItemInHand().equals(Result.DENY)) return;
+        if(e.getAction() == Action.PHYSICAL) return;
+        if(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK){
+            Player player = e.getPlayer();
+            AttributeManager am = new AttributeManager(Main.getInstance(), player);
+            ItemStack clickedItem = e.getItem();
+            if (clickedItem != null){
+                if (clickedItem.getType().name().endsWith("_BOOTS") && isAirOrNull(e.getPlayer().getInventory().getBoots())){
+                    if(clickedItem.getItemMeta().hasEnchant(this)){
+                        am.setSpeedModifiers(Objects.requireNonNull(clickedItem.getItemMeta()).getEnchantLevel(this));
+                    }
+                }
+            }
 
+        }
+
+    }
+    @EventHandler(priority =  EventPriority.HIGHEST, ignoreCancelled = true)
+    public void inventoryDrag(InventoryDragEvent event){
+        if (event.getRawSlots().isEmpty()) return;
+        ItemStack draggedItem = event.getOldCursor();
+        Player p = (Player) event.getWhoClicked();
+        AttributeManager am = new AttributeManager(Main.getInstance(), p);
+        if (draggedItem != null && event.getRawSlots().stream().findFirst().orElse(0) == 8){
+            if (draggedItem.getType().name().endsWith("_BOOTS")){
+                if (draggedItem.getItemMeta().hasEnchant(this)){
+                    am.setSpeedModifiers(Objects.requireNonNull(draggedItem.getItemMeta()).getEnchantLevel(this));
+                }
+            }
+        }
+    }
     @Override
     public int getMaxLevel() {
         return 5;
