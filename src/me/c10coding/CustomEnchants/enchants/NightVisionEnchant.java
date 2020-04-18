@@ -10,6 +10,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -133,6 +134,7 @@ public class NightVisionEnchant extends CustomEnchant {
             }
         }
     }
+    @EventHandler
     public void onRespawn(PlayerRespawnEvent e){
         ItemStack helmetSlot = e.getPlayer().getInventory().getHelmet();
         if (helmetSlot != null){
@@ -141,6 +143,7 @@ public class NightVisionEnchant extends CustomEnchant {
             }
         }
     }
+
     @Override
     public int getMaxLevel() {
         return 1;
