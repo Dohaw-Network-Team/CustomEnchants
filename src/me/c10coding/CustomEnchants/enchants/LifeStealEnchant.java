@@ -143,7 +143,7 @@ public class LifeStealEnchant extends CustomEnchant{
 		chestplateMeta.addEnchant(plugin.chestImplants, 1, false);
 		chestplateMeta.addEnchant(plugin.molten, 1, false);
 		leggingsMeta.addEnchant(plugin.muscleSap, 1, false);
-		helmet.addEnchantment(plugin.nightVision, 1);
+		helmetMeta.addEnchant(plugin.nightVision, 1, false);
 
 		item.setItemMeta(im);
 		bow.setItemMeta(bowMeta);
