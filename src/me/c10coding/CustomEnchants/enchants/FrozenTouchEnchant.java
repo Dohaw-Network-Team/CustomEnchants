@@ -1,8 +1,11 @@
 package me.c10coding.CustomEnchants.enchants;
 
+import me.c10coding.CustomEnchants.utils.Chat;
 import me.c10coding.CustomEnchants.utils.EnchantmentKeys;
 import me.caleb.Classes.Main;
 import me.caleb.Classes.utils.managers.AttributeManager;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Particle;
@@ -31,7 +34,6 @@ public class FrozenTouchEnchant extends CustomEnchant{
         Entity enDamager = e.getDamager();
         Player playerHit, playerDamager;
 
-
         if(enHit instanceof Player) {
             playerHit = (Player) e.getEntity();
             if (enDamager instanceof Arrow || enDamager instanceof Snowball || enDamager instanceof Fireball) {
@@ -50,52 +52,50 @@ public class FrozenTouchEnchant extends CustomEnchant{
             }
 
             if(playerHit.getInventory().getArmorContents().length != 0){
-
-                List<ItemStack> armorContents = Arrays.asList(playerHit.getInventory().getArmorContents());
-                armorContents.removeAll(Collections.singletonList(null));
-
                 int chance = 0;
-                for (ItemStack i : armorContents) {
-                    if (i.getItemMeta().hasEnchant(this)) {
-                        chance += getChance(i.getItemMeta().getEnchantLevel(this));
+                List<ItemStack> armorWithEnchant = new ArrayList<ItemStack>();
+                for(ItemStack i : playerHit.getInventory().getArmorContents()){
+                    if(i != null){
+                        if (i.getItemMeta().hasEnchant(this)) {
+                            chance += getChance(i.getItemMeta().getEnchantLevel(this));
+                            armorWithEnchant.add(i);
+                        }
                     }
                 }
 
                 int i = rnd.nextInt(100);
 
                 if (i < chance) {
-                    Bukkit.broadcastMessage("I am here2");
                     /*
                         Here, we get the level of a random armor piece that has the enchantment. We use that level to choose what
                         percentage the player gets slowed
                      */
                     AttributeManager am = new AttributeManager(Main.getInstance(), playerDamager);
-                    int randomArmorNumber = rnd.nextInt(armorContents.size());
-                    int level = armorContents.get(randomArmorNumber).getItemMeta().getEnchantLevel(this);
+                    int randomArmorNumber = rnd.nextInt(armorWithEnchant.size());
+                    int level = armorWithEnchant.get(randomArmorNumber).getItemMeta().getEnchantLevel(this);
 
                     double lengthOfEnchant = config.getDouble(configPath + ".LengthPerLevel." + level);
                     double percentageDecrease = config.getDouble(configPath + ".DecreasedPercentagePerLevel." + level);
 
-                    double currentSpeedValue = am.getSpeedValue();
-                    double newSpeedValue = currentSpeedValue - (currentSpeedValue * percentageDecrease);
-
                     Collection<AttributeModifier> playerSpeedModifiers = playerDamager.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getModifiers();
+                    am.setSpeedModifier(level, "FT");
+                    playerDamager.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Chat.chat("&b&l[&a&lYou have been slowed down! &f&l(Frozen Touch)&b&l]")));
 
-                    am.removeSpeedModifiers();
-                    am.setSpeedValue(newSpeedValue);
 
                     new BukkitRunnable(){
                         int counter = 0;
                         @Override
                         public void run() {
                             if(counter == lengthOfEnchant){
+                                am.removeSpeedModifiers();
                                 am.restoreSpeedModifiers(playerSpeedModifiers);
                                 this.cancel();
                             }else{
+                                playerDamager.getWorld().spawnParticle(enchantParticle, playerDamager.getLocation(), 10);
                                 counter++;
                             }
                         }
-                    };
+                    }.runTaskTimer(plugin, 0L, 20L);
                 }
             }
         }

@@ -55,7 +55,7 @@ public class SwiftFootEnchant extends CustomEnchant{
                 if (e.getRawSlot() == 8) equip = false;
                 if (e.getCurrentItem().getType().name().endsWith("_BOOTS") && (equip == isAirOrNull(e.getWhoClicked().getInventory().getBoots()))){
                     if (equip) {
-                        am.setSpeedModifiers(Objects.requireNonNull(e.getCurrentItem().getItemMeta()).getEnchantLevel(this));
+                        am.setSpeedModifier(Objects.requireNonNull(e.getCurrentItem().getItemMeta()).getEnchantLevel(this), "SF");
                     }else{
                         am.reApplyClassSpeedModifier();
                     }
@@ -78,7 +78,7 @@ public class SwiftFootEnchant extends CustomEnchant{
                             }
                         }
                         if (Objects.requireNonNull(hotbarItem.getItemMeta()).hasEnchant(this)) {
-                            am.setSpeedModifiers(Objects.requireNonNull(hotbarItem.getItemMeta()).getEnchantLevel(this));
+                            am.setSpeedModifier(Objects.requireNonNull(hotbarItem.getItemMeta()).getEnchantLevel(this), "SF");
                         }
                     } else {
                         if(!isAirOrNull(oldArmorPiece)) {
@@ -103,7 +103,7 @@ public class SwiftFootEnchant extends CustomEnchant{
                     }
                 }
                 if (cursorItem.getItemMeta().hasEnchant(this)){
-                    am.setSpeedModifiers(Objects.requireNonNull(cursorItem.getItemMeta()).getEnchantLevel(this));
+                    am.setSpeedModifier(Objects.requireNonNull(cursorItem.getItemMeta()).getEnchantLevel(this), "SF");
                 }
             }
         }
@@ -120,7 +120,7 @@ public class SwiftFootEnchant extends CustomEnchant{
             if (clickedItem != null){
                 if (clickedItem.getType().name().endsWith("_BOOTS") && isAirOrNull(e.getPlayer().getInventory().getBoots())){
                     if(clickedItem.getItemMeta().hasEnchant(this)){
-                        am.setSpeedModifiers(Objects.requireNonNull(clickedItem.getItemMeta()).getEnchantLevel(this));
+                        am.setSpeedModifier(Objects.requireNonNull(clickedItem.getItemMeta()).getEnchantLevel(this), "SF");
                     }
                 }
             }
@@ -137,7 +137,7 @@ public class SwiftFootEnchant extends CustomEnchant{
         if (draggedItem != null && event.getRawSlots().stream().findFirst().orElse(0) == 8){
             if (draggedItem.getType().name().endsWith("_BOOTS")){
                 if (draggedItem.getItemMeta().hasEnchant(this)){
-                    am.setSpeedModifiers(Objects.requireNonNull(draggedItem.getItemMeta()).getEnchantLevel(this));
+                    am.setSpeedModifier(Objects.requireNonNull(draggedItem.getItemMeta()).getEnchantLevel(this), "SF");
                 }
             }
         }

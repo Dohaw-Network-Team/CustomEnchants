@@ -32,6 +32,7 @@ public class Main extends JavaPlugin{
 	public static CustomEnchant muscleSap;
 	public static CustomEnchant nightVision;
 	public static CustomEnchant frozenTouch;
+	public static CustomEnchant berserker;
 
 	private ArrayList<Enchantment> enchantList = new ArrayList<Enchantment>();
 	
@@ -64,6 +65,7 @@ public class Main extends JavaPlugin{
 		muscleSap = new MuscleSapEnchant();
 		nightVision = new NightVisionEnchant();
 		frozenTouch = new FrozenTouchEnchant();
+		berserker = new BerserkerEnchant();
 
 		enchantList.add(lifeSteal);
 		enchantList.add(deepWounds);
@@ -81,6 +83,7 @@ public class Main extends JavaPlugin{
 		enchantList.add(muscleSap);
 		enchantList.add(nightVision);
 		enchantList.add(frozenTouch);
+		enchantList.add(berserker);
 
 		for(Enchantment e : enchantList) {
 			registerEnchantment(e);

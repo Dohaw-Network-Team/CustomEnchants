@@ -13,7 +13,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class ExtraLifeEnchant extends CustomEnchant {
-    public ExtraLifeEnchant(EnchantmentKeys ek, ChatColor lc, Particle p) {
+    public ExtraLifeEnchant() {
         super(EnchantmentKeys.extra_life,ChatColor.GREEN, null);
         Bukkit.getServer().getPluginManager().registerEvents(this, plugin);
     }
@@ -22,7 +22,7 @@ public class ExtraLifeEnchant extends CustomEnchant {
     public void onDamage(EntityDamageEvent e){
         if (e.getEntity() instanceof Player){
             Player player = (Player) e.getEntity();
-            double health = (double) (player.getHealth() - e.getDamage());
+            double health = (player.getHealth() - e.getDamage());
             if (health <= config.getDouble(configPath+".Health_Activation")){
                 AttributeManager am = new AttributeManager(Main.getInstance(), player);
                 BukkitRunnable bukkitRunnable = new BukkitRunnable() {

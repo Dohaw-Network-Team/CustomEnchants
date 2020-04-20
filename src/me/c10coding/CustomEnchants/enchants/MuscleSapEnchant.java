@@ -110,6 +110,7 @@ public class MuscleSapEnchant extends CustomEnchant {
                         playerDamager.getWorld().spawnParticle(enchantParticle, playerDamager.getLocation(), 50);
 
                         playerHit.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Chat.chat("&b&l[&a&lMuscle Sap Applied!&b&l]")));
+                        playerDamager.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Chat.chat("&b&l[&a&lYou have decreased attributes! &f&l(Muscle Sap)&b&l]")));
 
                         new BukkitRunnable() {
                             int counter = 1;

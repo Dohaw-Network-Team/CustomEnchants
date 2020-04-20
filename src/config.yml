@@ -96,3 +96,10 @@ Enchants:
       1: 1
       2: 1
       3: 2
+  Berserker:
+    HealthActivationPerLevel:
+      1: 6
+      2: 8
+    StrengthIncreasePerLevel:
+      1: 10
+      2: 20
