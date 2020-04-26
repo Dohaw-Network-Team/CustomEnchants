@@ -108,10 +108,10 @@ public class LifeStealEnchant extends CustomEnchant{
 		List<String> leggingsLore = new ArrayList<String>();
 		List<String> helmetLore = new ArrayList<>();
 
-		//lore.add(plugin.lifeSteal.loreColor + Main.getInstance().lifeSteal.getName() + " II");
-		//lore.add(plugin.deepWounds.loreColor + plugin.deepWounds.getName() + " I");
-		//lore.add(plugin.witherBlow.loreColor + plugin.witherBlow.getName() + " III");
-		//lore.add(plugin.headless.loreColor + plugin.headless.getName() + " III");
+		lore.add(plugin.lifeSteal.loreColor + Main.getInstance().lifeSteal.getName() + " II");
+		lore.add(plugin.deepWounds.loreColor + plugin.deepWounds.getName() + " I");
+		lore.add(plugin.witherBlow.loreColor + plugin.witherBlow.getName() + " III");
+		lore.add(plugin.headless.loreColor + plugin.headless.getName() + " III");
 		lore.add(plugin.berserker.loreColor + plugin.berserker.getName() + " I");
 
 		bowLore.add(plugin.tempest.loreColor + plugin.tempest.getName() + " I");
@@ -140,10 +140,10 @@ public class LifeStealEnchant extends CustomEnchant{
 		leggingsMeta.setLore(leggingsLore);
 		helmetMeta.setLore(helmetLore);
 
-		//im.addEnchant(plugin.lifeSteal, 2, false);
-		//im.addEnchant(plugin.deepWounds, 1, false);
-		//im.addEnchant(plugin.headless, 3, false);
-		//im.addEnchant(plugin.witherBlow, 3, false);
+		im.addEnchant(plugin.lifeSteal, 2, false);
+		im.addEnchant(plugin.deepWounds, 1, false);
+		im.addEnchant(plugin.headless, 3, false);
+		im.addEnchant(plugin.witherBlow, 3, false);
 		im.addEnchant(plugin.berserker, 1, false);
 
 		bowMeta.addEnchant(plugin.tempest, 1, false);
@@ -172,11 +172,11 @@ public class LifeStealEnchant extends CustomEnchant{
 		helmet.setItemMeta(helmetMeta);
 
 		e.getPlayer().getInventory().addItem(item);
-		//e.getPlayer().getInventory().addItem(bow);
-		//e.getPlayer().getInventory().addItem(boots);
-		//e.getPlayer().getInventory().addItem(chestplate);
-		//e.getPlayer().getInventory().addItem(leggings);
-		//e.getPlayer().getInventory().addItem(helmet);
+		e.getPlayer().getInventory().addItem(bow);
+		e.getPlayer().getInventory().addItem(boots);
+		e.getPlayer().getInventory().addItem(chestplate);
+		e.getPlayer().getInventory().addItem(leggings);
+		e.getPlayer().getInventory().addItem(helmet);
 	}
 
 	@Override
