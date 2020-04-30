@@ -1,9 +1,10 @@
 package me.c10coding.CustomEnchants.enchants;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
+import me.c10coding.CustomEnchants.Main;
+import me.c10coding.CustomEnchants.utils.Chat;
+import me.c10coding.CustomEnchants.utils.EnchantmentKeys;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -13,17 +14,13 @@ import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import me.c10coding.CustomEnchants.Main;
-import me.c10coding.CustomEnchants.utils.Chat;
-import me.c10coding.CustomEnchants.utils.EnchantmentKeys;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LifeStealEnchant extends CustomEnchant{
 	
@@ -50,7 +47,7 @@ public class LifeStealEnchant extends CustomEnchant{
 			ItemStack itemInHand = p.getItemInHand();
 
 			if (itemInHand.hasItemMeta() && itemInHand.getItemMeta().hasEnchants() && itemInHand != null) {
-				if (itemInHand.getItemMeta().getEnchants().containsKey(Enchantment.getByKey(plugin.lifeSteal.getKey()))) {
+				if (itemInHand.getItemMeta().getEnchants().containsKey(Enchantment.getByKey(Main.lifeSteal.getKey()))) {
 
 					double chance = getChance(itemInHand.getItemMeta().getEnchantLevel(this));
 
@@ -89,6 +86,7 @@ public class LifeStealEnchant extends CustomEnchant{
 
 		ItemStack item = new ItemStack(Material.STONE_SWORD, 1);
 		ItemStack bow = new ItemStack(Material.BOW, 1);
+		ItemStack Abow = new ItemStack(Material.BOW, 1);
 		ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
 		ItemStack chestplate = new ItemStack(Material.LEATHER_CHESTPLATE);
 		ItemStack leggings = new ItemStack(Material.LEATHER_LEGGINGS);
@@ -100,38 +98,41 @@ public class LifeStealEnchant extends CustomEnchant{
 		ItemMeta chestplateMeta = chestplate.getItemMeta();
 		ItemMeta leggingsMeta = leggings.getItemMeta();
 		ItemMeta helmetMeta = helmet.getItemMeta();
+		ItemMeta AbowMeta = Abow.getItemMeta();
 
-		List<String> lore = new ArrayList<String>();
-		List<String> bowLore = new ArrayList<String>();
-		List<String> bootsLore = new ArrayList<String>();
-		List<String> chestplateLore = new ArrayList<String>();
-		List<String> leggingsLore = new ArrayList<String>();
+		List<String> lore = new ArrayList<>();
+		List<String> bowLore = new ArrayList<>();
+		List<String> bootsLore = new ArrayList<>();
+		List<String> chestplateLore = new ArrayList<>();
+		List<String> leggingsLore = new ArrayList<>();
 		List<String> helmetLore = new ArrayList<>();
+		List<String> AbowLore = new ArrayList<>();
 
-		lore.add(plugin.lifeSteal.loreColor + Main.getInstance().lifeSteal.getName() + " II");
-		lore.add(plugin.deepWounds.loreColor + plugin.deepWounds.getName() + " I");
-		lore.add(plugin.witherBlow.loreColor + plugin.witherBlow.getName() + " III");
-		lore.add(plugin.headless.loreColor + plugin.headless.getName() + " III");
-		lore.add(plugin.berserker.loreColor + plugin.berserker.getName() + " I");
+		lore.add(Main.lifeSteal.loreColor + Main.lifeSteal.getName() + " II");
+		lore.add(Main.deepWounds.loreColor + Main.deepWounds.getName() + " I");
+		lore.add(Main.witherBlow.loreColor + Main.witherBlow.getName() + " III");
+		lore.add(Main.headless.loreColor + Main.headless.getName() + " III");
+		lore.add(Main.berserker.loreColor + Main.berserker.getName() + " I");
 
-		bowLore.add(plugin.tempest.loreColor + plugin.tempest.getName() + " I");
-		bowLore.add(plugin.cripplingShot.loreColor + plugin.cripplingShot.getName() + " I");
-		bowLore.add(plugin.shuffleShot.loreColor + plugin.shuffleShot.getName() + " II");
-		bowLore.add(plugin.witherShot.loreColor + plugin.witherShot.getName() + " I");
-		bowLore.add(plugin.piercing.loreColor + plugin.piercing.getName() + " I");
+		bowLore.add(Main.tempest.loreColor + Main.tempest.getName() + " I");
+		bowLore.add(Main.cripplingShot.loreColor + Main.cripplingShot.getName() + " I");
+		bowLore.add(Main.shuffleShot.loreColor + Main.shuffleShot.getName() + " II");
+		bowLore.add(Main.witherShot.loreColor + Main.witherShot.getName() + " I");
+		bowLore.add(Main.piercing.loreColor + Main.piercing.getName() + " I");
 
-		bootsLore.add(plugin.swiftFoot.loreColor + plugin.swiftFoot.getName() + " I");
-		bootsLore.add(plugin.enlightening.loreColor + plugin.enlightening.getName() + " I");
-		bootsLore.add(plugin.molten.loreColor + plugin.molten.getName() + " I");
+		bootsLore.add(Main.swiftFoot.loreColor + Main.swiftFoot.getName() + " I");
+		bootsLore.add(Main.enlightening.loreColor + Main.enlightening.getName() + " I");
+		bootsLore.add(Main.molten.loreColor + Main.molten.getName() + " I");
 
-		chestplateLore.add(plugin.chestImplants.loreColor + plugin.chestImplants.getName() + " I");
-		chestplateLore.add(plugin.molten.loreColor + plugin.molten.getName() + " I");
-		chestplateLore.add(plugin.frozenTouch.loreColor + plugin.frozenTouch.getName() + " I");
+		chestplateLore.add(Main.chestImplants.loreColor + Main.chestImplants.getName() + " I");
+		chestplateLore.add(Main.molten.loreColor + Main.molten.getName() + " I");
+		chestplateLore.add(Main.frozenTouch.loreColor + Main.frozenTouch.getName() + " I");
 
-		leggingsLore.add(plugin.muscleSap.loreColor + plugin.muscleSap.getName() + " I");
+		leggingsLore.add(Main.muscleSap.loreColor + Main.muscleSap.getName() + " I");
 
-		helmetLore.add(plugin.nightVision.loreColor + plugin.nightVision.getName() + " I");
+		helmetLore.add(Main.nightVision.loreColor + Main.nightVision.getName() + " I");
 
+		AbowLore.add(Main.advancedBow.loreColor + Main.advancedBow.getName() + " I");
 
 		im.setLore(lore);
 		bowMeta.setLore(bowLore);
@@ -139,30 +140,32 @@ public class LifeStealEnchant extends CustomEnchant{
 		chestplateMeta.setLore(chestplateLore);
 		leggingsMeta.setLore(leggingsLore);
 		helmetMeta.setLore(helmetLore);
+		AbowMeta.setLore(AbowLore);
 
-		im.addEnchant(plugin.lifeSteal, 2, false);
-		im.addEnchant(plugin.deepWounds, 1, false);
-		im.addEnchant(plugin.headless, 3, false);
-		im.addEnchant(plugin.witherBlow, 3, false);
-		im.addEnchant(plugin.berserker, 1, false);
+		im.addEnchant(Main.lifeSteal, 2, false);
+		im.addEnchant(Main.deepWounds, 1, false);
+		im.addEnchant(Main.headless, 3, false);
+		im.addEnchant(Main.witherBlow, 3, false);
+		im.addEnchant(Main.berserker, 1, false);
 
-		bowMeta.addEnchant(plugin.tempest, 1, false);
-		bowMeta.addEnchant(plugin.cripplingShot, 1, false);
-		bowMeta.addEnchant(plugin.shuffleShot, 2, false);
-		bowMeta.addEnchant(plugin.witherShot, 1, false);
-		bowMeta.addEnchant(plugin.piercing, 1, false);
+		bowMeta.addEnchant(Main.tempest, 1, false);
+		bowMeta.addEnchant(Main.cripplingShot, 1, false);
+		bowMeta.addEnchant(Main.shuffleShot, 2, false);
+		bowMeta.addEnchant(Main.witherShot, 1, false);
+		bowMeta.addEnchant(Main.piercing, 1, false);
 
-		bootsMeta.addEnchant(plugin.swiftFoot, 1, false);
-		bootsMeta.addEnchant(plugin.enlightening, 1, false);
-		bootsMeta.addEnchant(plugin.molten, 1, false);
+		bootsMeta.addEnchant(Main.swiftFoot, 1, false);
+		bootsMeta.addEnchant(Main.enlightening, 1, false);
+		bootsMeta.addEnchant(Main.molten, 1, false);
 
-		chestplateMeta.addEnchant(plugin.chestImplants, 1, false);
-		chestplateMeta.addEnchant(plugin.molten, 1, false);
-		chestplateMeta.addEnchant(plugin.frozenTouch, 1, false);
+		chestplateMeta.addEnchant(Main.chestImplants, 1, false);
+		chestplateMeta.addEnchant(Main.molten, 1, false);
+		chestplateMeta.addEnchant(Main.frozenTouch, 1, false);
 
-		leggingsMeta.addEnchant(plugin.muscleSap, 1, false);
+		leggingsMeta.addEnchant(Main.muscleSap, 1, false);
 
-		helmetMeta.addEnchant(plugin.nightVision, 1, false);
+		helmetMeta.addEnchant(Main.nightVision, 1, false);
+		AbowMeta.addEnchant(Main.advancedBow, 1, false);
 
 		item.setItemMeta(im);
 		bow.setItemMeta(bowMeta);
@@ -170,6 +173,7 @@ public class LifeStealEnchant extends CustomEnchant{
 		chestplate.setItemMeta(chestplateMeta);
 		leggings.setItemMeta(leggingsMeta);
 		helmet.setItemMeta(helmetMeta);
+		Abow.setItemMeta(AbowMeta);
 
 		e.getPlayer().getInventory().addItem(item);
 		e.getPlayer().getInventory().addItem(bow);
@@ -177,6 +181,7 @@ public class LifeStealEnchant extends CustomEnchant{
 		e.getPlayer().getInventory().addItem(chestplate);
 		e.getPlayer().getInventory().addItem(leggings);
 		e.getPlayer().getInventory().addItem(helmet);
+		e.getPlayer().getInventory().addItem(Abow);
 	}
 
 	@Override

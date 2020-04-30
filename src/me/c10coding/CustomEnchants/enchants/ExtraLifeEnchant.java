@@ -44,12 +44,12 @@ public class ExtraLifeEnchant extends CustomEnchant {
                             public void run() {
                                 int cooldown = (int) player.getMetadata("extraLifeCooldown").get(0).value();
                                 cooldown = cooldown - 1;
+                                MetadataValue data = new FixedMetadataValue(plugin, cooldown);
+                                player.setMetadata("extraLifeCooldown", data);
                                 if (cooldown == 0) {
                                     player.removeMetadata("extraLifeCooldown", plugin);
                                     this.cancel();
                                 }
-                                MetadataValue data = new FixedMetadataValue(plugin, cooldown);
-                                player.setMetadata("extraLifeCooldown", data);
                             }
                         }.runTaskTimer(plugin, 0l, 20l);
                     }

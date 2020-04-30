@@ -13,7 +13,6 @@ public enum EnchantmentKeys {
 	wither_blow,
 	wither_shot,
 	piercing,
-	advanced_bow,
 	molten,
 	enlightening,
 	muscle_sap,
@@ -25,5 +24,5 @@ public enum EnchantmentKeys {
 	fast_learning,
 	shard_harvesting,
 	vandalorian_accelerator,
-	health_booster, extra_life,
+	health_booster, extra_life, advanced_Bow,
 }

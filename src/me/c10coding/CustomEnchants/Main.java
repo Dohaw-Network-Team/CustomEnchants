@@ -1,16 +1,15 @@
 package me.c10coding.CustomEnchants;
 
-import java.io.File;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import me.c10coding.CustomEnchants.enchants.*;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Wither;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.File;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Main extends JavaPlugin{
 
@@ -33,15 +32,16 @@ public class Main extends JavaPlugin{
 	public static CustomEnchant nightVision;
 	public static CustomEnchant frozenTouch;
 	public static CustomEnchant berserker;
+	public static CustomEnchant advancedBow;
 
-	private ArrayList<Enchantment> enchantList = new ArrayList<Enchantment>();
-	
+	private final ArrayList<Enchantment> enchantList = new ArrayList<Enchantment>();
+
 	public void onEnable() {
-		
-		File[] files = {new File(this.getDataFolder(),"config.yml")};
-		
-		for(File f : files) {
-			if(!f.exists()) {
+
+		File[] files = {new File(this.getDataFolder(), "config.yml")};
+
+		for (File f : files) {
+			if (!f.exists()) {
 				this.saveResource(f.getName(), false);
 				Bukkit.getConsoleSender().sendMessage("[CustomEnchants] Loading " + f.getName());
 			}
@@ -66,6 +66,7 @@ public class Main extends JavaPlugin{
 		nightVision = new NightVisionEnchant();
 		frozenTouch = new FrozenTouchEnchant();
 		berserker = new BerserkerEnchant();
+		advancedBow = new AdvancedBow();
 
 		enchantList.add(lifeSteal);
 		enchantList.add(deepWounds);
@@ -84,11 +85,12 @@ public class Main extends JavaPlugin{
 		enchantList.add(nightVision);
 		enchantList.add(frozenTouch);
 		enchantList.add(berserker);
+		enchantList.add(advancedBow);
 
-		for(Enchantment e : enchantList) {
+		for (Enchantment e : enchantList) {
 			registerEnchantment(e);
 		}
-		
+
 	}
 	
 	public void onDisable() {
@@ -100,10 +102,8 @@ public class Main extends JavaPlugin{
 		    HashMap<NamespacedKey, Enchantment> byKey = (HashMap<NamespacedKey, Enchantment>) keyField.get(null);
 		 
 		    for(Enchantment e : enchantList) {
-		    	 if(byKey.containsKey(e.getKey())) {
-			        byKey.remove(e.getKey());
-	    	 	 }
-		    }
+				byKey.remove(e.getKey());
+			}
 
 		    Field nameField = Enchantment.class.getDeclaredField("byName");
 
@@ -112,10 +112,8 @@ public class Main extends JavaPlugin{
 		    HashMap<String, Enchantment> byName = (HashMap<String, Enchantment>) nameField.get(null);
 
 		    for(Enchantment e : enchantList) {
-		    	if(byName.containsKey(e.getName())) {
-			        byName.remove(e.getName());
-			    }
-		    }
+				byName.remove(e.getName());
+			}
 		    
 		} catch (Exception ignored) { }
 	}

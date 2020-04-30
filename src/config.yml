@@ -107,3 +107,8 @@ Enchants:
     StrengthIncreasePerLevel:
       1: 10
       2: 20
+  Advanced_Bow:
+    Cooldown:
+      1: 10
+    Damage:
+      1: 2
